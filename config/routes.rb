@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   draw :authentication
 
   defaults format: :json do
-    # API routes
+    namespace :admin do
+      resources :carnivals
+      post '/login', to: 'login#create'
+    end
   end
 end

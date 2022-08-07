@@ -30,7 +30,7 @@ module FormValidatorHelper
     case I18n.locale
     when :en
       error.path.reverse.map(&:to_s)
-    when :tr
+    when :id
       error.path.map(&:to_s)
     else
       raise "Unsupported locale #{I18n.locale}"
@@ -41,7 +41,7 @@ module FormValidatorHelper
     case I18n.locale
     when :en
       error_path.map(&:humanize).join(" #{error_text_splitter} ").capitalize
-    when :tr
+    when :id
       error_path.map do |path|
         I18n.t("forms.#{form.class.to_s.underscore}.attributes.#{path}").to_s
       end.join(" #{error_text_splitter} ").capitalize
@@ -54,8 +54,8 @@ module FormValidatorHelper
     case I18n.locale
     when :en
       'of'
-    when :tr
-      'içindeki'
+    when :id
+      ''
     else
       raise "Unsupported locale #{I18n.locale}"
     end

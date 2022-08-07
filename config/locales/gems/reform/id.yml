@@ -1,0 +1,5 @@
+---
+id:
+  dry_validation:
+    errors:
+      invalid?: invalid

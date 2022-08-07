@@ -10,9 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_12_195921) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_07_051718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assessment_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "assessment_id"
+    t.bigint "assessment_question_id"
+    t.bigint "user_id"
+    t.integer "answer"
+    t.integer "index_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assessment_id"], name: "index_assessment_answers_on_assessment_id"
+    t.index ["assessment_question_id"], name: "index_assessment_answers_on_assessment_question_id"
+    t.index ["user_id"], name: "index_assessment_answers_on_user_id"
+  end
+
+  create_table "assessment_questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "question"
+    t.string "choice_1_text"
+    t.string "choice_2_text"
+    t.string "choice_1_image"
+    t.string "choice_2_image"
+    t.integer "choice_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "programmable_type"
+    t.uuid "programmable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["programmable_type", "programmable_id"], name: "index_assessments_on_programmable"
+  end
+
+  create_table "carnivals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "status", default: 0, null: false
+    t.date "finished_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "resource_owner_type"
@@ -51,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_12_195921) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

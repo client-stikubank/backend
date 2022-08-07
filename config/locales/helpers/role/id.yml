@@ -1,0 +1,4 @@
+id:
+  helpers:
+    role:
+      admin_only: Hanya dapat diakses oleh Admin!

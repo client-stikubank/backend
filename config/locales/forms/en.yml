@@ -1,0 +1,7 @@
+id:
+  forms:
+    carnival_form:
+      attributes:
+        finished_at: Finish time
+      errors:
+        less_than_current_time: can't be smaller than the current time

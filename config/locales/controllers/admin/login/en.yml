@@ -1,0 +1,6 @@
+en:
+  controllers:
+    admin:
+      login:
+        errors:
+          invalid_credentials: 'Email or password is wrong!'

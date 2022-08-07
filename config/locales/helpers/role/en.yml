@@ -1,0 +1,4 @@
+en:
+  helpers:
+    role:
+      admin_only: Only accessible by Admin!

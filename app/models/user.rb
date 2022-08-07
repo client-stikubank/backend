@@ -2,4 +2,6 @@
 
 class User < ApplicationRecord
   include Authenticable
+
+  enum role: %i[admin user]
 end

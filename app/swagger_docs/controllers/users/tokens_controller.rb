@@ -7,7 +7,7 @@ module Controllers
 
       swagger_path '/users/oauth/token' do
         operation :post do
-          key :summary, 'Login '
+          key :summary, 'Login'
           key :description, 'Generate acess and refresh tokens for authentication'
           key :operationId, 'userSignIn'
           key :tags, [

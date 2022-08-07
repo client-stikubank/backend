@@ -1,0 +1,6 @@
+id:
+  controllers:
+    admin:
+      login:
+        errors:
+          invalid_credentials: Email atau password salah!

@@ -1,0 +1,7 @@
+id:
+  forms:
+    carnival_form:
+      attributes:
+        finished_at: Waktu selesai
+      errors:
+        less_than_current_time: tidak boleh kurang dari waktu sekarang!

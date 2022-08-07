@@ -45,6 +45,9 @@ group :development, :test do
   # A library for generating fake data [https://github.com/faker-ruby/faker]
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 
+  # A library for setting up Ruby objects as test data. [https://github.com/thoughtbot/factory_bot_rails]
+  gem 'factory_bot_rails', '~> 6.2'
+
   # Pretty print your Ruby objects [https://github.com/awesome-print/awesome_print]
   gem 'awesome_print'
 
@@ -75,9 +78,6 @@ group :test do
 
   # Simple one-liner tests for common Rails functionality [https://github.com/thoughtbot/shoulda-matchers#minitest]
   gem 'shoulda-matchers', '~> 4.0'
-
-  # A library for setting up Ruby objects as test data. [https://github.com/thoughtbot/factory_bot_rails]
-  gem 'factory_bot_rails', '~> 6.2'
 
   # Mocha is a mocking and stubbing library for Ruby [https://github.com/freerange/mocha]
   gem 'mocha', '~> 1.13'
@@ -115,3 +115,5 @@ gem 'sidekiq', '~> 6.4', '>= 6.4.1'
 
 # Object-based searching [https://github.com/activerecord-hackery/ransack]
 gem 'ransack', github: 'activerecord-hackery/ransack'
+
+gem 'carrierwave', '~> 2.0'
