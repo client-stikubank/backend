@@ -117,3 +117,4 @@ gem 'sidekiq', '~> 6.4', '>= 6.4.1'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
 gem 'carrierwave', '~> 2.0'
+gem 'jsonapi-serializer'

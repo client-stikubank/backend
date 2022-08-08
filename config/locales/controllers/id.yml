@@ -1,0 +1,4 @@
+id:
+  controllers:
+    errors:
+      data_not_found: 'Data tidak ditemukan'

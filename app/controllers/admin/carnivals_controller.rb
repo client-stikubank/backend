@@ -2,36 +2,35 @@
 
 module Admin
   class CarnivalsController < AdminController
+    before_action :set_carnival, only: %i[show]
+
     def index
-      service = CarnivalService::List.new.call(
+      carnivals = CarnivalService::List.new.call(
         query: query_object,
         pagination: pagination_object
       )
 
-      @carnivals = service.success
-      render json: { data: @carnivals, pagination: paginate(@carnivals) }
+      @carnivals = carnivals.success
+      serialize!(Carnival, @carnivals, paginate(@carnivals))
     end
 
     def create
-      @form = CarnivalForm.new(Carnival.new)
+      carnival = CarnivalService::Create.new(params: carnival_params).call
+      carnival ? serialize!(Carnival, carnival) : error!(carnival.failure[1])
+    end
 
-      unless @form.validate(carnival_params)
-        return render json: to_json_form_errors(@form), status: :unprocessable_entity
-      end
-
-      @form.save do |form_params|
-        service = CarnivalService::Create.new(params: form_params.deep_symbolize_keys).call
-
-        return render json: service, status: :created if service
-
-        render json: { errors: service.failure[1] }, status: :unprocessable_entity
-      end
+    def show
+      @carnival ? serialize!(Carnival, @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
     end
 
     private
 
     def carnival_params
-      params.require(:carnival).permit(:name, :finished_at)
+      params.require(:carnival).permit(:name, :finished_at, :description)
+    end
+
+    def set_carnival
+      @carnival = Carnival.find_by(id: params[:id])
     end
   end
 end

@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_07_051718) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_174458) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "assessment_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "assessment_id"
-    t.bigint "assessment_question_id"
-    t.bigint "user_id"
+    t.uuid "assessment_id"
+    t.uuid "assessment_question_id"
+    t.uuid "user_id"
     t.integer "answer"
     t.integer "index_order"
     t.datetime "created_at", null: false
@@ -47,12 +47,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_07_051718) do
     t.index ["programmable_type", "programmable_id"], name: "index_assessments_on_programmable"
   end
 
+  create_table "camps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.integer "level", default: 1, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "carnivals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "status", default: 0, null: false
     t.date "finished_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
   end
 
   create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -84,6 +94,34 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_07_051718) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "stage_camps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "stage_id"
+    t.uuid "camp_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["camp_id"], name: "index_stage_camps_on_camp_id"
+    t.index ["stage_id"], name: "index_stage_camps_on_stage_id"
+  end
+
+  create_table "stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "stage_camp_id"
+    t.date "started_at", null: false
+    t.string "time_start", null: false
+    t.string "time_end", null: false
+    t.integer "quota", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stage_camp_id"], name: "index_stage_schedules_on_stage_camp_id"
+  end
+
+  create_table "stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.uuid "carnival_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carnival_id"], name: "index_stages_on_carnival_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -97,5 +135,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_07_051718) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "assessment_answers", "assessment_questions"
+  add_foreign_key "assessment_answers", "assessments"
+  add_foreign_key "assessment_answers", "users"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "stage_camps", "camps"
+  add_foreign_key "stage_camps", "stages"
+  add_foreign_key "stage_schedules", "stage_camps"
+  add_foreign_key "stages", "carnivals"
 end
