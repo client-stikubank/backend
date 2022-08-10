@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   defaults format: :json do
     namespace :admin do
       resources :carnivals
+      resources :stages, only: :update
       post '/login', to: 'login#create'
     end
   end

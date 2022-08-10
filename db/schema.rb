@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_174458) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,7 +119,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_174458) do
     t.uuid "carnival_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "level"
     t.index ["carnival_id"], name: "index_stages_on_carnival_id"
+  end
+
+  create_table "user_stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "stage_schedule_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stage_schedule_id"], name: "index_user_stage_schedules_on_stage_schedule_id"
+    t.index ["user_id"], name: "index_user_stage_schedules_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -143,4 +153,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_174458) do
   add_foreign_key "stage_camps", "stages"
   add_foreign_key "stage_schedules", "stage_camps"
   add_foreign_key "stages", "carnivals"
+  add_foreign_key "user_stage_schedules", "stage_schedules"
+  add_foreign_key "user_stage_schedules", "users"
 end

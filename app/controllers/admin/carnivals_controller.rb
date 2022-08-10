@@ -20,7 +20,7 @@ module Admin
     end
 
     def show
-      @carnival ? serialize!(Carnival, @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
+      @carnival ? serialize!('CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
     end
 
     private
