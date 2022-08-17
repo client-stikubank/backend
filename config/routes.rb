@@ -17,7 +17,10 @@ Rails.application.routes.draw do
   defaults format: :json do
     namespace :admin do
       resources :carnivals
-      resources :stages, only: :update
+      resources :camps
+      resources :stages, only: %i[index update]
+      resources :stage_camps
+      resources :stage_camp_schedules
       post '/login', to: 'login#create'
     end
   end

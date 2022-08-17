@@ -15,4 +15,16 @@ module ApplicationHelper
       count: collection.total_count
     }
   end
+
+  def order_query(klass, order)
+    order = order.split
+    column_type = klass.column_for_attribute(order[0]).type
+
+    case column_type
+    when :string, :text
+      order[0] = "LOWER(#{order[0]})"
+    end
+
+    order.join(' ')
+  end
 end

@@ -12,6 +12,6 @@ class ParameterObject::Query
   attr_reader :query
 
   def initialize(query = nil)
-    @query = query
+    @query = JSON.parse(query) if query
   end
 end

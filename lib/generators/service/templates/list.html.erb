@@ -3,10 +3,14 @@
 require "dry/monads/do"
 
 class <%= service_class_name %>::List
+  include ApplicationHelper
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  def call(pagination: nil, query: nil)
+  def call(pagination: nil, query: nil, order: nil)
+    records = <%= class_name.singularize.camelize %>.order(
+      order ? order_query(<%= class_name.singularize.camelize %>, order) : 'created_at DESC'
+    )
     Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
   end
 end

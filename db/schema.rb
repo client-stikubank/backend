@@ -94,16 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table "stage_camps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "stage_id"
-    t.uuid "camp_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["camp_id"], name: "index_stage_camps_on_camp_id"
-    t.index ["stage_id"], name: "index_stage_camps_on_stage_id"
-  end
-
-  create_table "stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "stage_camp_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "stage_camp_id"
     t.date "started_at", null: false
     t.string "time_start", null: false
@@ -111,7 +102,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
     t.integer "quota", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["stage_camp_id"], name: "index_stage_schedules_on_stage_camp_id"
+    t.index ["stage_camp_id"], name: "index_stage_camp_schedules_on_stage_camp_id"
+  end
+
+  create_table "stage_camps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "stage_id"
+    t.uuid "camp_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["camp_id"], name: "index_stage_camps_on_camp_id"
+    t.index ["stage_id"], name: "index_stage_camps_on_stage_id"
   end
 
   create_table "stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -125,10 +125,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
 
   create_table "user_stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.uuid "stage_schedule_id"
+    t.uuid "stage_camp_schedule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["stage_schedule_id"], name: "index_user_stage_schedules_on_stage_schedule_id"
+    t.index ["stage_camp_schedule_id"], name: "index_user_stage_schedules_on_stage_camp_schedule_id"
     t.index ["user_id"], name: "index_user_stage_schedules_on_user_id"
   end
 
@@ -149,10 +149,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "stage_camp_schedules", "stage_camps"
   add_foreign_key "stage_camps", "camps"
   add_foreign_key "stage_camps", "stages"
-  add_foreign_key "stage_schedules", "stage_camps"
   add_foreign_key "stages", "carnivals"
-  add_foreign_key "user_stage_schedules", "stage_schedules"
+  add_foreign_key "user_stage_schedules", "stage_camp_schedules"
   add_foreign_key "user_stage_schedules", "users"
 end

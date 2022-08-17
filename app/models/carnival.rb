@@ -4,7 +4,7 @@ class Carnival < ApplicationRecord
   enum status: %i[inactive active finish]
 
   has_many :assessments, as: :programmable
-  has_many :stages
+  has_many :stages, dependent: :destroy
 
   after_create :create_stages
 

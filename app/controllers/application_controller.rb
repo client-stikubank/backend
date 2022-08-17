@@ -13,6 +13,12 @@ class ApplicationController < ActionController::API
     ParameterObject::Query.new(params[:query])
   end
 
+  def order_object
+    return unless params[:sort_field] && params[:sort_order]
+
+    "#{params[:sort_field]} #{params[:sort_order]}"
+  end
+
   def serialize!(klass, records, pagination = nil)
     klass = "#{klass}Serializer".classify.safe_constantize
     response = klass.new(records).serializable_hash
