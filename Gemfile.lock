@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/faker-ruby/faker.git
-  revision: 35a48ec6344b8a2581ed3b02d08b3c9f74f3ef27
+  revision: 4b17b5c2e576c47ac6f7821b81f4c5529fc03a13
   branch: master
   specs:
     faker (2.22.0)
@@ -18,6 +18,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.3.0)
+      concurrent-ruby (~> 1.0)
     actioncable (7.0.3.1)
       actionpack (= 7.0.3.1)
       activesupport (= 7.0.3.1)
@@ -85,12 +87,35 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    airbrussh (1.4.1)
+      sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.2)
     awesome_print (1.9.2)
     bcrypt (3.1.18)
+    bcrypt_pbkdf (1.1.0)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    capistrano (3.17.1)
+      airbrussh (>= 1.0.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-bundler (2.1.0)
+      capistrano (~> 3.1)
+    capistrano-rails (1.6.2)
+      capistrano (~> 3.1)
+      capistrano-bundler (>= 1.1, < 3)
+    capistrano-rbenv (2.2.0)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
+    capistrano3-delayed-job (1.7.6)
+      capistrano (~> 3.0, >= 3.0.0)
+      daemons (~> 1.3)
+    capistrano3-puma (5.2.0)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (>= 4.0, < 6.0)
     carrierwave (2.2.2)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -102,6 +127,7 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
+    daemons (1.4.1)
     debug (1.6.2)
       irb (>= 1.3.6)
       reline (>= 0.3.1)
@@ -133,7 +159,7 @@ GEM
     dry-monads (1.4.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.7)
-    dry-schema (1.9.3)
+    dry-schema (1.10.2)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.13, >= 0.13.0)
       dry-core (~> 0.5, >= 0.5)
@@ -152,6 +178,7 @@ GEM
       dry-core (~> 0.5, >= 0.5)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.8, >= 1.8.0)
+    ed25519 (1.3.0)
     erubi (1.11.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -204,7 +231,7 @@ GEM
     minitest-focus (1.3.1)
       minitest (>= 4, < 6)
     mocha (1.14.0)
-    msgpack (1.5.4)
+    msgpack (1.5.6)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -215,10 +242,13 @@ GEM
       timeout
     net-protocol (0.1.3)
       timeout
+    net-scp (3.0.0)
+      net-ssh (>= 2.6.5, < 7.0.0)
     net-smtp (0.3.1)
       digest
       net-protocol
       timeout
+    net-ssh (7.0.0.beta1)
     nio4r (2.5.8)
     nokogiri (1.13.8-arm64-darwin)
       racc (~> 1.4)
@@ -230,7 +260,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.4.3)
     public_suffix (5.0.0)
-    puma (5.6.4)
+    puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
@@ -266,7 +296,10 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    redis (4.7.1)
+    redis (5.0.1)
+      redis-client (~> 0.7)
+    redis-client (0.7.1)
+      connection_pool
     reform (2.6.2)
       disposable (>= 0.5.0, < 1.0.0)
       representable (>= 3.1.1, < 4)
@@ -285,7 +318,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.5)
-    rubocop (1.35.0)
+    rubocop (1.35.1)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -297,7 +330,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.21.0)
       parser (>= 3.1.1.0)
-    rubocop-minitest (0.21.0)
+    rubocop-minitest (0.21.1)
       rubocop (>= 0.90, < 2.0)
     rubocop-performance (1.14.3)
       rubocop (>= 1.7.0, < 2.0)
@@ -315,11 +348,16 @@ GEM
     shoulda-context (2.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    sidekiq (6.5.4)
+    sidekiq (6.5.5)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.5.0)
-    ssrf_filter (1.0.8)
+    sshkit (1.21.2)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
+    sshkit-sudo (0.1.0)
+      sshkit (~> 1.8)
+    ssrf_filter (1.1.0)
     strscan (3.0.4)
     swagger-blocks (3.0.0)
     thor (1.2.1)
@@ -341,14 +379,23 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aasm
   awesome_print
+  bcrypt_pbkdf (~> 1.1)
   bootsnap
+  capistrano (~> 3.17.0)
+  capistrano-bundler (~> 2.1.0)
+  capistrano-rails (~> 1.6.2)
+  capistrano-rbenv (~> 2.2.0)
+  capistrano3-delayed-job (~> 1.7.6)
+  capistrano3-puma (~> 5.2.0)
   carrierwave (~> 2.0)
   debug
   devise (~> 4.8, >= 4.8.1)
   doorkeeper (~> 5.5, >= 5.5.4)
   dry-monads (~> 1.4)
   dry-validation (~> 1.6)
+  ed25519 (~> 1.3)
   factory_bot_rails (~> 6.2)
   faker!
   jbuilder
@@ -357,6 +404,8 @@ DEPENDENCIES
   letter_opener (~> 1.4, >= 1.4.1)
   minitest-focus
   mocha (~> 1.13)
+  net-smtp
+  net-ssh (= 7.0.0.beta1)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
@@ -371,6 +420,7 @@ DEPENDENCIES
   shoulda (~> 4.0)
   shoulda-matchers (~> 4.0)
   sidekiq (~> 6.4, >= 6.4.1)
+  sshkit-sudo
   swagger-blocks (~> 3.0)
   tzinfo-data
 

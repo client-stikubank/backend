@@ -116,5 +116,19 @@ gem 'sidekiq', '~> 6.4', '>= 6.4.1'
 # Object-based searching [https://github.com/activerecord-hackery/ransack]
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
+gem 'aasm'
 gem 'carrierwave', '~> 2.0'
 gem 'jsonapi-serializer'
+
+# Deployment
+gem 'bcrypt_pbkdf', '~> 1.1'
+gem 'capistrano', '~> 3.17.0'
+gem 'capistrano3-delayed-job', '~> 1.7.6'
+gem 'capistrano3-puma', '~> 5.2.0'
+gem 'capistrano-bundler', '~> 2.1.0'
+gem 'capistrano-rails', '~> 1.6.2'
+gem 'capistrano-rbenv', '~> 2.2.0'
+gem 'ed25519', '~> 1.3'
+gem 'net-smtp'
+gem 'net-ssh', '7.0.0.beta1'
+gem 'sshkit-sudo'
