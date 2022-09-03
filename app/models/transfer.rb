@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Reward < ApplicationRecord
+class Transfer < ApplicationRecord
   has_many   :transactions, as: :sourceable, dependent: :destroy
   belongs_to :from, class_name: 'Wallet'
   belongs_to :to, class_name: 'Wallet'
