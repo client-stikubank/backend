@@ -1,0 +1,5 @@
+id:
+  errors:
+    messages:
+      greater_than_coin_max_supply: 'tidak boleh lebih besar dari supply maksimal'
+      wrong_transaction_subject: 'subjek transaksi tidak valid'

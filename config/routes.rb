@@ -16,8 +16,9 @@ Rails.application.routes.draw do
 
   defaults format: :json do
     namespace :admin do
-      resources :carnivals
       resources :camps
+      resources :carnivals
+      resources :coins, except: %i[create destroy]
       resources :stages, only: %i[index update]
       resources :stage_camps
       resources :stage_camp_schedules

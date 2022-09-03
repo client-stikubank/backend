@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
     t.text "description"
   end
 
+  create_table "coins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "name", null: false
+    t.text "description"
+    t.bigint "max_supply", default: 0, null: false
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "resource_owner_type"
     t.uuid "resource_owner_id"
@@ -92,6 +101,40 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "redeems", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "amount", default: 0, null: false
+    t.uuid "from_id"
+    t.uuid "to_id"
+    t.string "kindable_type"
+    t.uuid "kindable_id"
+    t.uuid "coin_id"
+    t.integer "redeem_type", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coin_id"], name: "index_redeems_on_coin_id"
+    t.index ["from_id"], name: "index_redeems_on_from_id"
+    t.index ["kindable_type", "kindable_id"], name: "index_redeems_on_kindable"
+    t.index ["to_id"], name: "index_redeems_on_to_id"
+  end
+
+  create_table "rewards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "amount", default: 0, null: false
+    t.uuid "from_id"
+    t.uuid "to_id"
+    t.string "activitable_type"
+    t.uuid "activitable_id"
+    t.uuid "coin_id"
+    t.integer "reward_type", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activitable_type", "activitable_id"], name: "index_rewards_on_activitable"
+    t.index ["coin_id"], name: "index_rewards_on_coin_id"
+    t.index ["from_id"], name: "index_rewards_on_from_id"
+    t.index ["to_id"], name: "index_rewards_on_to_id"
   end
 
   create_table "stage_camp_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -123,6 +166,39 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
     t.index ["carnival_id"], name: "index_stages_on_carnival_id"
   end
 
+  create_table "stocks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "coin_id"
+    t.bigint "balance", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coin_id"], name: "index_stocks_on_coin_id"
+  end
+
+  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "sourceable_type"
+    t.uuid "sourceable_id"
+    t.string "transactable_type"
+    t.uuid "transactable_id"
+    t.integer "subject", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sourceable_type", "sourceable_id"], name: "index_transactions_on_sourceable"
+    t.index ["transactable_type", "transactable_id"], name: "index_transactions_on_transactable"
+  end
+
+  create_table "transfers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "amount", default: 0, null: false
+    t.uuid "from_id"
+    t.uuid "to_id"
+    t.uuid "coin_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coin_id"], name: "index_transfers_on_coin_id"
+    t.index ["from_id"], name: "index_transfers_on_from_id"
+    t.index ["to_id"], name: "index_transfers_on_to_id"
+  end
+
   create_table "user_stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "stage_camp_schedule_id"
@@ -145,14 +221,37 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_10_143813) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wallets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "coin_id"
+    t.bigint "balance", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coin_id"], name: "index_wallets_on_coin_id"
+    t.index ["user_id", "coin_id"], name: "index_wallets_on_user_id_and_coin_id", unique: true
+    t.index ["user_id"], name: "index_wallets_on_user_id"
+  end
+
   add_foreign_key "assessment_answers", "assessment_questions"
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "redeems", "coins"
+  add_foreign_key "redeems", "stocks", column: "to_id"
+  add_foreign_key "redeems", "wallets", column: "from_id"
+  add_foreign_key "rewards", "coins"
+  add_foreign_key "rewards", "stocks", column: "from_id"
+  add_foreign_key "rewards", "wallets", column: "to_id"
   add_foreign_key "stage_camp_schedules", "stage_camps"
   add_foreign_key "stage_camps", "camps"
   add_foreign_key "stage_camps", "stages"
   add_foreign_key "stages", "carnivals"
+  add_foreign_key "stocks", "coins"
+  add_foreign_key "transfers", "coins"
+  add_foreign_key "transfers", "wallets", column: "from_id"
+  add_foreign_key "transfers", "wallets", column: "to_id"
   add_foreign_key "user_stage_schedules", "stage_camp_schedules"
   add_foreign_key "user_stage_schedules", "users"
+  add_foreign_key "wallets", "coins"
+  add_foreign_key "wallets", "users"
 end

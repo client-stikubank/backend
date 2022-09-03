@@ -1,0 +1,5 @@
+id:
+  errors:
+    messages:
+      greater_than_coin_max_supply: 'cannot be greater than the maximum supply'
+      wrong_transaction_subject: 'transaction subject is not valid'

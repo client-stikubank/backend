@@ -23,3 +23,9 @@ carnival = Carnival.find_or_create_by!(
 )
 
 carnival.assessments.create!
+
+Coin.names.to_a.each do |name|
+  coin = Coin.find_or_initialize_by(name: name[0])
+  coin.max_supply ||= 10_000
+  coin.save!
+end
