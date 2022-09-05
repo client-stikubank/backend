@@ -9,20 +9,27 @@ class RegistrationService::Register
   attr_reader :params
 
   def initialize(params:)
-    @params = params
+    profile_params                        = params[:user_profile]
+    user_params                           = params.except(:user_profile)
+    user_params[:user_profile_attributes] = profile_params
+    @params                               = user_params
   end
 
   def call
     ActiveRecord::Base.transaction(requires_new: true) do
-      user = yield call_create_user
-
-      Success(user)
+      yield call_create_user
     end
   end
 
   private
 
   def call_create_user
-    UserService::Create.new(params:).call
+    user_respond = UserService::Create.new(params: @params).call
+
+    if user_respond.instance_of?(User)
+      Success(user_respond)
+    else
+      user_respond
+    end
   end
 end

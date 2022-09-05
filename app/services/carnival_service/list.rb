@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dry/monads/do"
+require 'dry/monads/do'
 
 class CarnivalService::List
   include Dry::Monads[:result]

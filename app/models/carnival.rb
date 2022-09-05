@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Carnival < ApplicationRecord
-  enum status: %i[inactive active finish]
+  enum status: { inactive: 0, active: 1, finish: 2 }
 
   has_many :assessments, as: :programmable
   has_many :stages, dependent: :destroy
@@ -10,7 +10,7 @@ class Carnival < ApplicationRecord
 
   def create_stages
     6.times do |index|
-      index = index + 1
+      index += 1
       stages.create!(name: "Level #{index}", level: index)
     end
   end

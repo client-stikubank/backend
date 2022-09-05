@@ -3,7 +3,7 @@
 class Coin < ApplicationRecord
   mount_uploader :image, ImageUploader
 
-  enum name: %i[mamo beryl ale jenny]
+  enum name: { mamo: 0, beryl: 1, ale: 2, jenny: 3 }
   has_one :stock, dependent: :destroy
   has_many :wallets, dependent: :destroy
 
@@ -18,7 +18,7 @@ class Coin < ApplicationRecord
   end
 
   def build_wallets
-    User.all.each do |user|
+    User.all.find_each do |user|
       user.wallets.create(coin: self)
     end
   end

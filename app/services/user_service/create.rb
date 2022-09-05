@@ -13,7 +13,16 @@ class UserService::Create
   end
 
   def call
-    user = User.new(params)
+    ActiveRecord::Base.transaction(requires_new: true) do
+      yield call_create_record
+    end
+  end
+
+  private
+
+  def call_create_record
+    user          = User.new(params)
+    user.password = Devise.friendly_token.first(8) if user.password.blank?
 
     if user.save
       Success(user)

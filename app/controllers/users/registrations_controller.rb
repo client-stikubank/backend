@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @form = UserForm::Registration.new(User.new)
 
-    unless @form.validate(registration_params.except(:client_id))
+    unless @form.validate(registration_params)
       return render json: to_json_form_errors(@form),
                     status: :unauthorized
     end
@@ -16,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @form.save do |form_params|
       service = RegistrationService::Register.new(params: form_params.deep_symbolize_keys).call
 
-      return render json: render_user(service.success, @client_app), status: :created if service.success?
+      return render json: render_user(service, @client_app), status: :created if service.instance_of?(User)
 
       render json: { errors: service.failure[1] }, status: :unprocessable_entity
     end
@@ -34,6 +34,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def registration_params
-    params.permit(:email, :password, :client_id)
+    params.permit(:client_id, :email, :password, :password_confirmation, user_profile: [:first_name, :last_name, :phone_number, :birth_date], role_types: [])
   end
 end

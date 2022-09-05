@@ -22,7 +22,14 @@ Rails.application.routes.draw do
       resources :stages, only: %i[index update]
       resources :stage_camps
       resources :stage_camp_schedules
+      resources :permissions
+      resources :roles, only: %i[index show create]
+      resources :users
       post '/login', to: 'login#create'
+    end
+    namespace :users do
+      resources :user_profiles, only: %i[show update]
+      put :update_password, path: '/:id/update_password', to: 'users#update_password'
     end
   end
 end

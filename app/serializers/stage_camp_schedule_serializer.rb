@@ -3,7 +3,7 @@ class StageCampScheduleSerializer
 
   attributes :started_at, :time_start, :time_end, :quota
 
-  attribute :className do |object|
+  attribute :className do |_object|
     'bg-success text-white border-0'
   end
 

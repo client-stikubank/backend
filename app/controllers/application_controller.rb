@@ -3,6 +3,10 @@
 class ApplicationController < ActionController::API
   include FormValidatorHelper
 
+  rescue_from CanCan::AccessDenied do |_exception|
+    render json: { head: :forbidden }, status: :unauthorized
+  end
+
   private
 
   def pagination_object
@@ -22,7 +26,7 @@ class ApplicationController < ActionController::API
   def serialize!(klass, records, pagination = nil)
     klass = "#{klass}Serializer".classify.safe_constantize
     response = klass.new(records).serializable_hash
-    response = response.merge!({ pagination: pagination }) if pagination
+    response[:pagination] = pagination if pagination
     render json: response
   end
 
@@ -30,6 +34,10 @@ class ApplicationController < ActionController::API
     errors = form_errors_to_json(form)
 
     { errors: }.to_json
+  end
+
+  def destroyed!
+    render json: {}, status: :no_content
   end
 
   def error!(message)

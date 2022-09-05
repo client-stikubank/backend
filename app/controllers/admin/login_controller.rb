@@ -1,4 +1,6 @@
-module Admin
+# frozen_string_literal: true
+
+module Admins
   class LoginController < ApplicationController
     before_action :check_client, only: %i[create]
 
@@ -12,15 +14,19 @@ module Admin
                       status: :unauthorized
       end
 
-      @form.save do |form_params|
+      @form.save do |_form_params|
         user = User.authenticate(params[:email], params[:password])
 
-        return render json: { errors: I18n.t('controllers.admin.login.errors.invalid_credentials') },
-                      status: :unprocessable_entity unless user
+        unless user
+          return render json: { errors: I18n.t('controllers.admin.login.errors.invalid_credentials') },
+                        status: :unprocessable_entity
+        end
 
-        return render json: { errors: I18n.t('helpers.role.admin_only') },
-                      status: :unprocessable_entity unless user.admin?
-        
+        unless user.admin_user?
+          return render json: { errors: I18n.t('helpers.role.admin_only') },
+                        status: :unprocessable_entity
+        end
+
         render json: render_user(user, @client_app)
       end
     end
@@ -36,7 +42,7 @@ module Admin
       return if @client_app
 
       render json: { errors: { client: [I18n.t('doorkeeper.errors.messages.invalid_client')] } },
-            status: :bad_request
+             status: :bad_request
     end
 
     def login_params

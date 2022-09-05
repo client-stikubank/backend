@@ -117,7 +117,9 @@ gem 'sidekiq', '~> 6.4', '>= 6.4.1'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 
 gem 'aasm'
+gem 'cancancan'
 gem 'carrierwave', '~> 2.0'
+gem 'dotenv-rails'
 gem 'jsonapi-serializer'
 
 # Deployment
@@ -131,4 +133,5 @@ gem 'capistrano-rbenv', '~> 2.2.0'
 gem 'ed25519', '~> 1.3'
 gem 'net-smtp'
 gem 'net-ssh', '7.0.0.beta1'
+gem 'rolify'
 gem 'sshkit-sudo'

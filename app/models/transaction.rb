@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Transaction < ApplicationRecord
-  enum name: %i[sender receiver]
+  enum name: { sender: 0, receiver: 1 }
 
   belongs_to :sourceable, polymorphic: true
   belongs_to :transactable, polymorphic: true

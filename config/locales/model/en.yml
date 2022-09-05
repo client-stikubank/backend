@@ -1,5 +1,15 @@
 id:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short: 'Password is too short, must have minimum 6 characters'
+            password_confirmation:
+              confirmation: 'Password Confirmation and Password is not match'
   errors:
     messages:
+      empty_password_confirmation: 'Password Confirmation cannot be null'
       greater_than_coin_max_supply: 'cannot be greater than the maximum supply'
       wrong_transaction_subject: 'transaction subject is not valid'

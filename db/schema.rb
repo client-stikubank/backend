@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "assessment_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -103,6 +104,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "object_type"
+    t.string "action_name"
+    t.text "description"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+  end
+
   create_table "redeems", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "amount", default: 0, null: false
     t.uuid "from_id"
@@ -135,6 +144,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
     t.index ["coin_id"], name: "index_rewards_on_coin_id"
     t.index ["from_id"], name: "index_rewards_on_from_id"
     t.index ["to_id"], name: "index_rewards_on_to_id"
+  end
+
+  create_table "role_permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "role_id"
+    t.uuid "permission_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["permission_id"], name: "index_role_permissions_on_permission_id"
+    t.index ["role_id"], name: "index_role_permissions_on_role_id"
+  end
+
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
   create_table "stage_camp_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -199,6 +227,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
     t.index ["to_id"], name: "index_transfers_on_to_id"
   end
 
+  create_table "user_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.date "birth_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_profiles_on_user_id"
+  end
+
   create_table "user_stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "stage_camp_schedule_id"
@@ -216,9 +255,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
   create_table "wallets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -242,6 +288,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
   add_foreign_key "rewards", "coins"
   add_foreign_key "rewards", "stocks", column: "from_id"
   add_foreign_key "rewards", "wallets", column: "to_id"
+  add_foreign_key "role_permissions", "permissions"
+  add_foreign_key "role_permissions", "roles"
   add_foreign_key "stage_camp_schedules", "stage_camps"
   add_foreign_key "stage_camps", "camps"
   add_foreign_key "stage_camps", "stages"
@@ -250,8 +298,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_28_054351) do
   add_foreign_key "transfers", "coins"
   add_foreign_key "transfers", "wallets", column: "from_id"
   add_foreign_key "transfers", "wallets", column: "to_id"
+  add_foreign_key "user_profiles", "users"
   add_foreign_key "user_stage_schedules", "stage_camp_schedules"
   add_foreign_key "user_stage_schedules", "users"
+  add_foreign_key "users_roles", "roles"
+  add_foreign_key "users_roles", "users"
   add_foreign_key "wallets", "coins"
   add_foreign_key "wallets", "users"
 end

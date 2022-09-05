@@ -10,6 +10,7 @@ id:
         current_sign_in_at: Waktu masuk saat ini pada
         current_sign_in_ip: Alamat IP masuk saat ini
         email: Email
+        phone_number: Nomor Handphone
         encrypted_password: Kata sandi terenkripsi
         failed_attempts: Percobaan gagal
         last_sign_in_at: Terakhir masuk pada
@@ -25,8 +26,17 @@ id:
         unconfirmed_email: Email belum terkonfirmasi
         unlock_token: Token buka kunci
         updated_at: Diubah pada
+      user_profile:
+        first_name: Nama Depan
+        last_name: Nama Belakang
+        phone_number: Nomor Handphone
+        birth_date: Tanggal Lahir
+      role:
+        name: Nama
     models:
+      role: Tipe User
       user: Pengguna
+      user_profile: Profil Pengguna
   devise:
     confirmations:
       confirmed: Akun anda telah berhasil dikonfirmasi.
@@ -139,3 +149,6 @@ id:
       not_found: tidak ditemukan
       not_locked: tidak dikunci
       not_saved: '%{count} kesalahan membuat %{resource} tidak bisa disimpan:'
+      blank: '%{attribute} tidak boleh kosong'
+      invalid: '%{attribute} tidak valid'
+      taken: '%{attribute} sudah digunakan'

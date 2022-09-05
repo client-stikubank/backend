@@ -1,0 +1,32 @@
+# frozen_string_literal: true
+
+require 'dry/monads/do'
+
+class UserService::Destroy
+  include Dry::Monads[:result]
+  include Dry::Monads::Do.for(:call)
+
+  attr_reader :record
+
+  def initialize(record:)
+    @record = record
+  end
+
+  def call
+    ActiveRecord::Base.transaction(requires_new: true) do
+      yield call_destroy_record
+    end
+  end
+
+  private
+
+  def call_destroy_record
+    return Failure([:error, I18n.t('controllers.errors.data_not_found')]) unless record.present?
+
+    if record.destroy
+      Success(record)
+    else
+      Failure([:error, record.errors])
+    end
+  end
+end

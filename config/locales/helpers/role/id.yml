@@ -1,4 +1,6 @@
 id:
   helpers:
     role:
+      unauthorized: Akses tidak valid!
+      super_admin_only: Hanya dapat diakses oleh Super Admin!
       admin_only: Hanya dapat diakses oleh Admin!

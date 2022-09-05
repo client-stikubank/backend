@@ -3,7 +3,7 @@
 class Reward < ApplicationRecord
   include AASM
 
-  enum reward_type: %i[join_camp]
+  enum reward_type: { join_camp: 0 }
 
   has_many   :transactions, as: :sourceable, dependent: :destroy
   belongs_to :from, class_name: 'Stock'
@@ -26,6 +26,5 @@ class Reward < ApplicationRecord
     end
   end
 
-  def stock_available?
-  end
+  def stock_available?; end
 end

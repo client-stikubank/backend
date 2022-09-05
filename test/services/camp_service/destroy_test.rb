@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 class CampService::DestroyTest < ActiveSupport::TestCase
-  def setup
-  end
+  def setup; end
 
   test 'should destroy CampService with valid params' do
   end

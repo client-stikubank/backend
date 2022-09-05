@@ -5,3 +5,12 @@ id:
         finished_at: Waktu selesai
       errors:
         less_than_current_time: tidak boleh kurang dari waktu sekarang!
+    user_form/registration:
+      attributes:
+        email: Email
+        password: Password
+        first_name: Nama Depan
+        last_name: Nama Belakang
+        phone_number: Nomor Handphone
+        birth_date: Tanggal Lahir
+        roles: Role

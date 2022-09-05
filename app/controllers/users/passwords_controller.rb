@@ -13,6 +13,7 @@ module Users
 
     def update
       self.resource = resource_class.reset_password_by_token(password_params)
+
       yield resource if block_given?
 
       return render json: { message: I18n.t('devise.passwords.updated_not_active') }, status: :ok if resource.errors.empty?

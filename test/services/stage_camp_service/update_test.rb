@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 class StageCampService::UpdateTest < ActiveSupport::TestCase
-  def setup
-  end
+  def setup; end
 
   test 'should update StageCampService with valid params' do
   end

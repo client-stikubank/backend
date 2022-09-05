@@ -1,0 +1,66 @@
+id:
+  dry_validation:
+    or: "atau"
+    errors:
+      unexpected_key: "tidak dapat diproses"
+      array?: "harus format array"
+      empty?: "harus kosong"
+      excludes?: "tidak dapat menambah %{value}"
+      excluded_from?:
+        arg:
+          default: "tidak boleh salah satu dari: %{list}"
+          range: "tidak boleh diantara: %{list_left} - %{list_right}"
+      exclusion?: "tidak boleh salah satu dari: %{list}"
+      eql?: "harus sama dengan %{left}"
+      not_eql?: "tidak boleh sama dengan %{left}"
+      filled?: "harus diisi"
+      format?: "dalam format yang salah"
+      number?: "harus format angka"
+      odd?: "harus format ganjil"
+      even?: "harus format genap"
+      gt?: "harus lebih besar dari %{num}"
+      gteq?: "harus lebih besar atau sama dengan %{num}"
+      hash?: "harus format hash"
+      included_in?:
+        arg:
+          default: "harus salah satu dari: %{list}"
+          range: "harus salah satu diantara: %{list_left} - %{list_right}"
+      inclusion?: "harus salah satu dari: %{list}"
+      includes?: "harus memiliki %{value}"
+      bool?: "harus format boolean"
+      true?: "harus bernilai true"
+      false?: "harus bernilai false"
+      int?: "harus format integer"
+      float?: "harus format float"
+      decimal?: "harus format decimal"
+      date?: "harus format date"
+      date_time?: "harus format date time"
+      time?: "harus format time"
+      key?: "tidak ditemukan"
+      attr?: "tidak ditemukan"
+      lt?: "harus kurang dari %{num}"
+      lteq?: "harus kurang dari atau sama dengan %{num}"
+      max_size?: "format size tidak boleh lebih dari %{num}"
+      max_bytesize?: "format bytesize tidak boleh lebih dari %{num}"
+      min_size?: "format size tidak boleh kurang dari %{num}"
+      min_bytesize?: "format bytesize tidak boleh kurang dari %{num}"
+      nil?: "tidak diketahui"
+      str?: "harus format string"
+      type?: "harus format %{type}"
+      respond_to?: "harus respon ke %{method}"
+      size?:
+        arg:
+          default: "format size harus %{size}"
+          range: "format size harus diantara %{size_left} - %{size_right}"
+        value:
+          string:
+            arg:
+              default: "format length harus %{size}"
+              range: "format length harus diantara %{size_left} - %{size_right}"
+      bytesize?:
+        arg:
+          default: "format ukuran harus %{size} bytes"
+          range: "format ukuran harus diantara %{size_left} - %{size_right} bytes"
+      uuid_v4?: "UUID tidak valid"
+      not:
+        empty?: "tidak boleh kosong"
