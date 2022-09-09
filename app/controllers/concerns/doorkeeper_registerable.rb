@@ -33,7 +33,7 @@ module DoorkeeperRegisterable
       refresh_token: access_token.refresh_token,
       created_at: access_token.created_at.to_time.to_i,
       email: user.email,
-      role: user.role,
+      role: user.role.downcase
     }
   end
 end

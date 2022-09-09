@@ -26,7 +26,7 @@ module Admin
     end
 
     def destroy
-      camp = camp = CampService::Destroy.new(record: @camp).call
+      camp = CampService::Destroy.new(record: @camp).call
       camp ? serialize!(Camp, camp) : error!(camp.failure[1])
     end
 

@@ -11,7 +11,5 @@ class Transfer < ApplicationRecord
 
   private
 
-  def build_transactions
-
-  end
+  def build_transactions; end
 end

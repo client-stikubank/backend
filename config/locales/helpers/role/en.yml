@@ -1,4 +1,6 @@
 en:
   helpers:
     role:
+      unauthorized: Access is not valid!
+      super_admin_only: Only accessible by Super Admin!
       admin_only: Only accessible by Admin!

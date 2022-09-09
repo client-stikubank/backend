@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 class StageCampScheduleService::DestroyTest < ActiveSupport::TestCase
-  def setup
-  end
+  def setup; end
 
   test 'should destroy StageCampScheduleService with valid params' do
   end

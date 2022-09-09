@@ -26,7 +26,7 @@ module Admin
     end
 
     def destroy
-      stage_camp = stage_camp = StageCampService::Destroy.new(record: @stage_camp).call
+      stage_camp = StageCampService::Destroy.new(record: @stage_camp).call
       stage_camp ? serialize!(StageCamp, stage_camp) : error!(stage_camp.failure[1])
     end
 
