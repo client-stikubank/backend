@@ -55,15 +55,12 @@ default_student.update(role_ids: Role.find_by_name('student').id)
 default_student.build_user_profile(first_name: 'First', last_name: 'Student', birth_date: '1995-01-01', phone_number: '088888881').save
 
 # generate default carnival
-carnival = Carnival.find_or_create_by!(
-  name: 'First Carnival',
-  finished_at: Time.zone.now + 2.months
-)
-
-carnival.assessments.create!
+carnival = Carnival.find_or_initialize_by(name: 'First Carnival')
+carnival.finished_at = carnival.finished_at || Time.zone.now + 6.month
+carnival.save!
+carnival.assessments.create! unless carnival.assessments.exists?
 
 Coin.names.to_a.each do |name|
   coin = Coin.find_or_initialize_by(name: name[0])
-  coin.max_supply ||= 10_000
   coin.save!
 end

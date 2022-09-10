@@ -2,6 +2,7 @@
 
 class Stock < ApplicationRecord
   belongs_to :coin
+  has_many :transactions, as: :transactable
 
   validate :validate_balance!
 

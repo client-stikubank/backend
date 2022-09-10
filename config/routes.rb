@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       resources :permissions
       resources :roles, only: %i[index show create]
       resources :users
+      resources :stocks do
+        member do
+          get :transactions
+        end
+      end
       post '/login', to: 'login#create'
     end
     namespace :users do
