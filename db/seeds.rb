@@ -23,7 +23,7 @@ actions.each do |action|
   objects.each do |object|
     next if object_without_create_list.include?(object) && action.eql?('create')
 
-    next if object_without_update_list.include?(object) && action.eql?('create')
+    next if object_without_update_list.include?(object) && action.eql?('update')
 
     Permission.find_or_create_by(object_type: object, action_name: action)
   end
