@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Admins
+module Admin
   class LoginController < ApplicationController
     before_action :check_client, only: %i[create]
 
