@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  rolify
   include Authenticable
+  rolify
 
   has_one  :user_profile, dependent: :destroy
   has_many :stage_schedules, through: :user_stage_schedules

@@ -121,6 +121,7 @@ gem 'cancancan'
 gem 'carrierwave', '~> 2.0'
 gem 'dotenv-rails'
 gem 'jsonapi-serializer'
+gem 'pry-rails'
 
 # Deployment
 gem 'bcrypt_pbkdf', '~> 1.1'
