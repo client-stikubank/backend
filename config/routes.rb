@@ -18,11 +18,13 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :camps
       resources :carnivals
+      resources :cities
       resources :coins, except: %i[create destroy]
       resources :stages, only: %i[index update]
       resources :stage_camps
       resources :stage_camp_schedules
       resources :permissions
+      resources :provinces
       resources :roles, only: %i[index show create]
       resources :users
       resources :stocks do

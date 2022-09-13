@@ -2,6 +2,10 @@ id:
   activerecord:
     errors:
       models:
+        city:
+          attributes:
+            province:
+              required: Provinsi tidak boleh kosong
         user:
           attributes:
             password:

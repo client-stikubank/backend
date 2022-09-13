@@ -43,7 +43,7 @@ class User < ApplicationRecord
     has_role?(:teacher)
   end
 
-  def guardian?
+  def parent?
     has_role?(:guardian)
   end
 
@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def mobile_user?
-    student? || teacher? || guardian?
+    student? || teacher? || parent?
   end
 
   private

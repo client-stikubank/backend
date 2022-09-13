@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_13_152142) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "assessment_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -65,6 +66,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
     t.text "description"
   end
 
+  create_table "cities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "province_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_cities_on_deleted_at"
+    t.index ["province_id"], name: "index_cities_on_province_id"
+  end
+
   create_table "coins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "name", null: false
     t.text "description"
@@ -103,12 +114,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "parent_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_profile_id"
+    t.integer "graduate_status"
+    t.string "occupation"
+    t.integer "salary_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_profile_id"], name: "index_parent_informations_on_user_profile_id"
+  end
+
   create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "object_type"
     t.string "action_name"
     t.text "description"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "provinces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_provinces_on_deleted_at"
   end
 
   create_table "redeems", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -201,6 +230,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
     t.index ["coin_id"], name: "index_stocks_on_coin_id"
   end
 
+  create_table "student_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_profile_id"
+    t.integer "education_status"
+    t.string "previous_school"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_profile_id"], name: "index_student_informations_on_user_profile_id"
+  end
+
   create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "sourceable_type"
     t.uuid "sourceable_id"
@@ -234,6 +272,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
     t.date "birth_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "city_id"
+    t.index ["city_id"], name: "index_user_profiles_on_city_id"
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
@@ -254,7 +294,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -281,7 +320,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
   add_foreign_key "assessment_answers", "assessment_questions"
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
+  add_foreign_key "cities", "provinces"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "parent_informations", "user_profiles"
   add_foreign_key "redeems", "coins"
   add_foreign_key "redeems", "stocks", column: "to_id"
   add_foreign_key "redeems", "wallets", column: "from_id"
@@ -295,9 +336,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_023452) do
   add_foreign_key "stage_camps", "stages"
   add_foreign_key "stages", "carnivals"
   add_foreign_key "stocks", "coins"
+  add_foreign_key "student_informations", "user_profiles"
   add_foreign_key "transfers", "coins"
   add_foreign_key "transfers", "wallets", column: "from_id"
   add_foreign_key "transfers", "wallets", column: "to_id"
+  add_foreign_key "user_profiles", "cities"
   add_foreign_key "user_profiles", "users"
   add_foreign_key "user_stage_schedules", "stage_camp_schedules"
   add_foreign_key "user_stage_schedules", "users"

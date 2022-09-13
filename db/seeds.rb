@@ -17,7 +17,7 @@ actions = %w[read create update destroy]
 
 object_without_create_list = %w[Stage Coin]
 object_without_update_list = %w[Carnival]
-objects = %w[User Role Carnival Camp Stage StageCamp StageCampSchedule Coin]
+objects = %w[User Role Carnival Camp Stage StageCamp StageCampSchedule Coin Province City]
 
 actions.each do |action|
   objects.each do |object|
