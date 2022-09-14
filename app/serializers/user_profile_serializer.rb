@@ -8,6 +8,10 @@ class UserProfileSerializer
   end
 
   attribute :additional_info do |object|
-    object.parent_information
+    if object.user.parent?
+      ParentInformationSerializer.new(object.parent_information).serializable_hash
+    else
+      StudentInformationSerializer.new(object.student_information).serializable_hash
+    end
   end
 end
