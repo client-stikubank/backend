@@ -1,7 +1,11 @@
-id:
+en:
   activerecord:
     errors:
       models:
+        city:
+          attributes:
+            province:
+              required: Province can't be blank
         user:
           attributes:
             password:

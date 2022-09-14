@@ -40,11 +40,19 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:email, :password, user_profile_attributes: [:first_name, :last_name, :phone_number, :birth_date], role_types: [])
+      params.require(:user).permit(:email, :password,
+        user_profile_attributes: [:first_name, :last_name, :phone_number, :birth_date, :city_id,
+        parent_information_attributes: [:graduate_status, :occupation, :salary_level],
+        student_information_attributes: [:education_status, :previous_school]],
+        role_types: [])
     end
 
     def edit_user_params
-      params.require(:user).permit(:email, user_profile_attributes: [:id, :first_name, :last_name, :phone_number, :birth_date], role_types: [])
+      params.require(:user).permit(:email,
+        user_profile_attributes: [:id, :first_name, :last_name, :phone_number, :birth_date, :city_id,
+        parent_information_attributes: [:id, :graduate_status, :occupation, :salary_level],
+        student_information_attributes: [:id, :education_status, :previous_school]],
+        role_types: [])
     end
 
     def set_user
