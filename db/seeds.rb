@@ -16,14 +16,16 @@ end
 actions = %w[read create update destroy]
 
 object_without_create_list = %w[Stage Coin]
-object_without_update_list = %w[Carnival]
+object_without_update_list = %w[Carnival Refferal]
+object_without_destroy_list = %w[Role Refferal]
 objects = %w[User Role Carnival Camp Stage StageCamp StageCampSchedule Coin Province City]
-
 actions.each do |action|
   objects.each do |object|
     next if object_without_create_list.include?(object) && action.eql?('create')
 
     next if object_without_update_list.include?(object) && action.eql?('update')
+
+    next if object_without_destroy_list.include?(object) && action.eql?('destroy')
 
     Permission.find_or_create_by(object_type: object, action_name: action)
   end

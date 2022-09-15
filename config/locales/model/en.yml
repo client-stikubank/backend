@@ -17,3 +17,4 @@ en:
       empty_password_confirmation: 'Password Confirmation cannot be null'
       greater_than_coin_max_supply: 'cannot be greater than the maximum supply'
       wrong_transaction_subject: 'transaction subject is not valid'
+      invalid_reffering_code: 'Refferal Code is not valid'

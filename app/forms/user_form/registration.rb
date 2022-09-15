@@ -9,6 +9,7 @@ class UserForm::Registration < Reform::Form
   property :password
   property :user_profile
   property :role_types
+  property :reffering_code
 
   validation do
     config.messages.backend = :i18n

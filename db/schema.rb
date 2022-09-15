@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_13_152142) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_14_181616) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -157,6 +157,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_152142) do
     t.index ["to_id"], name: "index_redeems_on_to_id"
   end
 
+  create_table "refferals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "reffered_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reffered_by_id"], name: "index_refferals_on_reffered_by_id"
+    t.index ["user_id"], name: "index_refferals_on_user_id"
+  end
+
   create_table "rewards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "amount", default: 0, null: false
     t.uuid "from_id"
@@ -294,6 +303,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_152142) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "refferal_code"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -326,6 +336,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_152142) do
   add_foreign_key "redeems", "coins"
   add_foreign_key "redeems", "stocks", column: "to_id"
   add_foreign_key "redeems", "wallets", column: "from_id"
+  add_foreign_key "refferals", "users"
+  add_foreign_key "refferals", "users", column: "reffered_by_id"
   add_foreign_key "rewards", "coins"
   add_foreign_key "rewards", "stocks", column: "from_id"
   add_foreign_key "rewards", "wallets", column: "to_id"

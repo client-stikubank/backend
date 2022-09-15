@@ -6,6 +6,7 @@ module CustomTokenResponse
 
     additional_data = {
       'email': current_user.email,
+      'refferal_code': current_user.refferal_code,
       'role': current_user.role
     }
 

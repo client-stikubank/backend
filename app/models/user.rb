@@ -4,18 +4,25 @@ class User < ApplicationRecord
   include Authenticable
   rolify
 
-  has_one  :user_profile, dependent: :destroy
+  has_one :refferal, class_name: 'Refferal', foreign_key: :reffered_by_id
+  has_one :user_profile, dependent: :destroy
+
+  has_many :refferals
   has_many :stage_schedules, through: :user_stage_schedules
   has_many :wallets
 
-  attr_accessor :generated_password, :role_types
+  validate  :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
+
+  attr_accessor :generated_password, :role_types, :reffering_code
 
   accepts_nested_attributes_for :user_profile
 
+  before_save :set_generated_password
+  before_save :set_refferal_code
+
   after_create :manage_roles
   after_create :build_wallets
-
-  before_save :set_generated_password
+  after_create :build_refferal, if: Proc.new { reffering_code.present? }
 
   after_commit :send_registration_mail, on: :create
 
@@ -63,6 +70,18 @@ class User < ApplicationRecord
     end
   end
 
+  def check_reffering_code
+    reffering = User.find_by_refferal_code(reffering_code)
+
+    errors.add(:base, I18n.t('errors.messages.invalid_reffering_code')) unless reffering.present?
+  end
+
+  def build_refferal
+    reffering = User.find_by_refferal_code(reffering_code)
+
+    refferals.create(reffered_by_id:reffering.id ) if reffering.present?
+  end
+
   def manage_roles
     roles = role_types.presence || ['student']
     role_ids = Role.where(name: roles).ids
@@ -79,5 +98,9 @@ class User < ApplicationRecord
 
   def set_generated_password
     self.generated_password = password
+  end
+
+  def set_refferal_code
+    self.refferal_code = SecureRandom.hex[0, 8].upcase
   end
 end
