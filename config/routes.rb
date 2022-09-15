@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :stage_camp_schedules
       resources :permissions
       resources :provinces
+      resources :refferals, only: %i[index show]
       resources :roles, only: %i[index show create]
       resources :users
       resources :stocks do

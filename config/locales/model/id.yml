@@ -17,3 +17,4 @@ id:
       empty_password_confirmation: 'Konfirmasi Kata Sandi tidak boleh kosong'
       greater_than_coin_max_supply: 'tidak boleh lebih besar dari supply maksimal'
       wrong_transaction_subject: 'subjek transaksi tidak valid'
+      invalid_reffering_code: 'Kode Referal tidak valid'

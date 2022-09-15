@@ -29,6 +29,7 @@ class RegistrationService::Register
     if user_respond.instance_of?(User)
       Success(user_respond)
     else
+
       user_respond
     end
   end
