@@ -14,4 +14,15 @@ class Carnival < ApplicationRecord
       stages.create!(name: "Level #{index}", level: index)
     end
   end
+
+  def self.active
+    where(status: 1).first
+  end
+
+  def activate!
+    return self if self.active?
+
+    Carnival.active&.inactive!
+    self.update(status: :active)
+  end
 end

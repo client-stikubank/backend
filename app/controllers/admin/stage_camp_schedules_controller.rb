@@ -7,12 +7,11 @@ module Admin
     def index
       stage_camp_schedules = StageCampScheduleService::List.new.call(
         query: query_object,
-        pagination: pagination_object,
         order: order_object
       )
 
       @stage_camp_schedules = stage_camp_schedules.success
-      serialize!(StageCampSchedule, @stage_camp_schedules, paginate(@stage_camp_schedules))
+      serialize!(StageCampSchedule, @stage_camp_schedules)
     end
 
     def create

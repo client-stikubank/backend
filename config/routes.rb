@@ -35,6 +35,14 @@ Rails.application.routes.draw do
       end
       post '/login', to: 'login#create'
     end
+    namespace :api do
+      namespace :v1 do
+        resources :stages, only: :show
+        resources :stage_camps, only: :show
+
+        get '/active_carnival', to: 'carnivals#active_carnival'
+      end
+    end
     namespace :users do
       resources :user_profiles, only: %i[show update]
       put :update_password, path: '/:id/update_password', to: 'users#update_password'

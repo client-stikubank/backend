@@ -8,7 +8,8 @@ class User < ApplicationRecord
   has_one :user_profile, dependent: :destroy
 
   has_many :refferals
-  has_many :stage_schedules, through: :user_stage_schedules
+  has_many :user_stage_schedules
+  has_many :stage_camp_schedules, through: :user_stage_schedules
   has_many :wallets
 
   validate  :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
