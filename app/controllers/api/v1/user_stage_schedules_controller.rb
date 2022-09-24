@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UserStageScheduleController < MobileController
+    class UserStageSchedulesController < MobileController
       def create
         user_stage_schedule = UserStageScheduleService::Create.new(
           params: user_stage_schedule_params,

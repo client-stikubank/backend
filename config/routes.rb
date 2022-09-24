@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       namespace :v1 do
         resources :stages, only: :show
         resources :stage_camps, only: :show
+        resources :user_stage_schedules, only: :create
 
         get '/active_carnival', to: 'carnivals#active_carnival'
       end
