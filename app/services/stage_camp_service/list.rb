@@ -9,6 +9,6 @@ class StageCampService::List
 
   def call(pagination: nil, query: nil, order: nil)
     records = StageCampService.order(order ? order_query(StageCampService, order) : 'created_at DESC')
-    Success(records.ransack(query.query).result
+    Success(records.ransack(query.query).result)
   end
 end
