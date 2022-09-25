@@ -6,7 +6,7 @@ class UserStageScheduleService::Create
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  attr_reader :params
+  attr_reader :params, :user
 
   def initialize(params:, user:)
     @params = params
@@ -22,7 +22,8 @@ class UserStageScheduleService::Create
   private
 
   def call_create_record
-    record = user ? user.user_stage_schedules.new(params) : UserStageSchedule.new(params)
+    schedule_id = params[:stage_camp_schedule_id]
+    record = user ? user.user_stage_schedules.new(stage_camp_schedule_id: schedule_id) : UserStageSchedule.new(params)
 
     if record.save
       Success(record)

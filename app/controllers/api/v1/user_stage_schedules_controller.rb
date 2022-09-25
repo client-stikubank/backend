@@ -12,7 +12,7 @@ module Api
       private
 
       def user_stage_schedule_params
-        params.require(:user_stage_schedule).permit(:stage_schedule_id)
+        params.require(:user_stage_schedule).permit(:stage_camp_schedule_id)
       end
     end
   end
