@@ -7,8 +7,8 @@ class StageCampScheduleService::List
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  def call(pagination: nil, query: nil, order: nil)
+  def call(query: nil, order: nil)
     records = StageCampSchedule.order(order ? order_query(StageCampSchedule, order) : 'created_at DESC')
-    Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
+    Success(records.ransack(query.query).result)
   end
 end

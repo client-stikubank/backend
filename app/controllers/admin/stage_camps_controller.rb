@@ -7,7 +7,6 @@ module Admin
     def index
       stage_camps = StageCampService::List.new.call(
         query: query_object,
-        pagination: pagination_object,
         order: order_object
       )
 
