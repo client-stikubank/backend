@@ -10,6 +10,10 @@ class StageCampDetailSerializer
   end
 
   attribute :stage_camp_schedules do |object|
-    object.stage_camp_schedules
+    schedules = []
+    StageCampSchedule.all.order(started_at: :asc).group_by(&:started_at).each do |key, group|
+      schedules << { date: key, schedules: group }
+    end
+    schedules
   end
 end
