@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :refferals, only: %i[index show]
       resources :roles, only: %i[index show create]
       resources :users
+      resources :user_stage_schedules
       resources :stocks do
         member do
           get :transactions
