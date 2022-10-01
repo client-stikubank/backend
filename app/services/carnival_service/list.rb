@@ -6,7 +6,7 @@ class CarnivalService::List
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  def call(pagination: nil, query: nil)
+  def call(pagination: nil, query: nil, order: nil)
     records = Carnival.order(
       order ? order_query(Carnival, order) : 'created_at DESC'
     )

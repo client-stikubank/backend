@@ -7,7 +7,8 @@ module Admin
     def index
       carnivals = CarnivalService::List.new.call(
         query: query_object,
-        pagination: pagination_object
+        pagination: pagination_object,
+        order: order_object
       )
 
       @carnivals = carnivals.success
