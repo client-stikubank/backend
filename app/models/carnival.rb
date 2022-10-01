@@ -6,6 +6,10 @@ class Carnival < ApplicationRecord
   has_many :assessments, as: :programmable
   has_many :stages, dependent: :destroy
 
+  has_many :stage_camps, through: :stages
+  has_many :stage_camp_schedules, through: :stage_camps
+  has_many :user_stage_schedules, through: :stage_camp_schedules
+
   after_create :create_stages
 
   def create_stages
