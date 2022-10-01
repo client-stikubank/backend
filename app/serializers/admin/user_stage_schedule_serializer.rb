@@ -6,7 +6,7 @@ module Admin
       UserSerializer.new(object.user).serializable_hash
     end
 
-    attribute :stage_camp |object|
+    attribute :stage_camp do |object|
       StageCampSerializer.new(object.stage_camp).serializable_hash
     end
 
