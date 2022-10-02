@@ -24,6 +24,11 @@ module Admin
       @carnival ? serialize!('CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
     end
 
+    def update
+      carnival = CarnivalService::Update.new(params: carnival_params, record: @carnival).call
+      carnival ? serialize!(Carnival, carnival) : error!(carnival.failure[1])
+    end
+
     private
 
     def carnival_params
