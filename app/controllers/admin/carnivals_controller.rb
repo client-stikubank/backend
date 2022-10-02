@@ -2,7 +2,7 @@
 
 module Admin
   class CarnivalsController < AdminController
-    before_action :set_carnival, only: %i[show]
+    before_action :set_carnival, only: %i[show update activate]
 
     def index
       carnivals = CarnivalService::List.new.call(
@@ -27,6 +27,12 @@ module Admin
     def update
       carnival = CarnivalService::Update.new(params: carnival_params, record: @carnival).call
       carnival ? serialize!(Carnival, carnival) : error!(carnival.failure[1])
+    end
+
+    def activate
+      @carnival.activate!
+
+      @carnival ? serialize!('CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
     end
 
     private
