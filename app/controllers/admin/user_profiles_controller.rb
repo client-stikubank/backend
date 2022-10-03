@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Users
-  class UserProfilesController < UserController
+module Admin
+  class UserProfilesController < AdminController
     before_action :set_user_profile, only: %i[show update]
 
     def update
@@ -24,7 +24,7 @@ module Users
     end
 
     def set_user_profile
-      @user_profile = UserProfile.find_by(id: params[:id])
+      @user_profile = UserProfile.find_by(id: current_user.user_profile.id)
     end
   end
 end

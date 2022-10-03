@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       resources :provinces
       resources :refferals, only: %i[index show]
       resources :roles, only: %i[index show create]
+      resources :user_profiles, only: %i[show update]
       resources :users
       resources :user_stage_schedules
       resources :stocks do
@@ -39,6 +40,8 @@ Rails.application.routes.draw do
         end
       end
       post '/login', to: 'login#create'
+
+      put :update_password, path: '/:id/update_password', to: 'users#update_password'
     end
     namespace :api do
       namespace :v1 do
@@ -46,12 +49,11 @@ Rails.application.routes.draw do
         resources :stage_camps, only: :show
         resources :user_stage_schedules, only: :create
 
+        get :display_profile, path: '/:id/display_profile', to: 'user_profiles#display_profile'
+        put :update_profile, path: '/:id/update_profile', to: 'user_profiles#update_profile'
+        put :update_password, path: '/:id/update_password', to: 'users#update_password'
         get '/active_carnival', to: 'carnivals#active_carnival'
       end
-    end
-    namespace :users do
-      resources :user_profiles, only: %i[show update]
-      put :update_password, path: '/:id/update_password', to: 'users#update_password'
     end
   end
 end

@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   validate  :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
 
-  attr_accessor :generated_password, :role_types, :reffering_code
+  attr_accessor :generated_password, :role_types, :reffering_code, :student_information, :parent_information
 
   accepts_nested_attributes_for :user_profile
 
@@ -90,7 +90,7 @@ class User < ApplicationRecord
   end
 
   def send_registration_mail
-    ApplicationMailer.send_confirmation(id, generated_password).deliver_now
+    SendRegistrationMailWorker.perform_async(id, generated_password)
   end
 
   def assign_default_role
