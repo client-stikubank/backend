@@ -3,6 +3,7 @@
 module Admin
   class UsersController < AdminController
     before_action :set_user, only: %i[show update destroy]
+    before_action :set_own_user, only: %i[update_password]
 
     def index
       users = UserService::List.new.call(
@@ -37,6 +38,12 @@ module Admin
       user.instance_of?(User) ? destroyed! : error!(user.failure[1])
     end
 
+    def update_password
+      user = UserService::Update.new(params: change_password_params, record: @user).call
+
+      user.instance_of?(User) ? serialize!(User, user) : error!(user.failure[1])
+    end
+
     private
 
     def user_params
@@ -55,8 +62,16 @@ module Admin
         role_types: [])
     end
 
+    def change_password_params
+      params.require(:user).permit(:password, :password_confirmation)
+    end
+
     def set_user
       @user = User.find_by(id: params[:id])
+    end
+
+    def set_own_user
+      @user = User.find_by(id: current_user.id)
     end
   end
 end

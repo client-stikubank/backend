@@ -8,6 +8,8 @@ class UserForm::Registration < Reform::Form
   property :email
   property :password
   property :user_profile
+  property :student_information
+  property :parent_information
   property :role_types
   property :reffering_code
 

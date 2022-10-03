@@ -9,10 +9,16 @@ class RegistrationService::Register
   attr_reader :params
 
   def initialize(params:)
-    profile_params                        = params[:user_profile]
-    user_params                           = params.except(:user_profile)
-    user_params[:user_profile_attributes] = profile_params
-    @params                               = user_params
+    profile_params             = params[:user_profile]
+    parent_information_params  = params[:parent_information]
+    student_information_params = params[:student_information]
+    user_params                = params.except(:user_profile, :parent_information, :student_information)
+
+    user_params[:user_profile_attributes]                                  = profile_params
+    user_params[:user_profile_attributes][:parent_information_attributes]  = parent_information_params if parent_information_params.present?
+    user_params[:user_profile_attributes][:student_information_attributes] = student_information_params if student_information_params.present?
+
+    @params  = user_params
   end
 
   def call
