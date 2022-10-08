@@ -9,12 +9,13 @@ id:
         user:
           attributes:
             password:
-              too_short: 'Kata Sandi terlalu pendek, minimal harus 6 karakter'
+              too_short: Kata Sandi terlalu pendek, minimal harus 6 karakter
             password_confirmation:
-              confirmation: "Konfirmasi Kata Sandi tidak sesuai dengan Kata Sandi"
+              confirmation: Konfirmasi Kata Sandi tidak sesuai dengan Kata Sandi
   errors:
     messages:
-      empty_password_confirmation: 'Konfirmasi Kata Sandi tidak boleh kosong'
-      greater_than_coin_max_supply: 'tidak boleh lebih besar dari supply maksimal'
-      wrong_transaction_subject: 'subjek transaksi tidak valid'
-      invalid_reffering_code: 'Kode Referal tidak valid'
+      empty_password_confirmation: Konfirmasi Kata Sandi tidak boleh kosong
+      greater_than_coin_max_supply: tidak boleh lebih besar dari supply maksimal
+      wrong_transaction_subject: subjek transaksi tidak valid
+      invalid_reffering_code: Kode Referal tidak valid
+      quota_is_full: Kuota pelatihan sudah penuh

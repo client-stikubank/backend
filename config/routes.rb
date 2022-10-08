@@ -49,9 +49,9 @@ Rails.application.routes.draw do
         resources :stage_camps, only: :show
         resources :user_stage_schedules, only: :create
 
-        get :display_profile, path: '/:id/display_profile', to: 'user_profiles#display_profile'
-        put :update_profile, path: '/:id/update_profile', to: 'user_profiles#update_profile'
-        put :update_password, path: '/:id/update_password', to: 'users#update_password'
+        get :display_profile, path: '/display_profile', to: 'user_profiles#display_profile'
+        put :update_profile, path: '/update_profile', to: 'user_profiles#update_profile'
+        put :update_password, path: '/update_password', to: 'users#update_password'
         get '/active_carnival', to: 'carnivals#active_carnival'
       end
     end
