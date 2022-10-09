@@ -4,6 +4,7 @@ require 'sshkit/sudo'
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 require 'capistrano/deploy'
+require 'capistrano/sidekiq'
 
 # require 'capistrano/rails'
 require 'capistrano/scm/git'
@@ -16,6 +17,8 @@ install_plugin Capistrano::Puma
 install_plugin Capistrano::Puma::Nginx
 install_plugin Capistrano::Puma::Workers
 install_plugin Capistrano::Puma::Systemd
+install_plugin Capistrano::Sidekiq
+install_plugin Capistrano::Sidekiq::Systemd
 # require 'capistrano/delayed_job'
 set :rbenv_type, :user
 set :rbenv_ruby, '3.1.2'
