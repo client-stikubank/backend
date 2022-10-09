@@ -34,9 +34,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def registration_params
-    params.permit(:client_id, :email, :password, :password_confirmation, :reffering_code, user_profile: [:first_name, :last_name, :phone_number, :birth_date],
+    params.permit(
+      :client_id, :email, :password, :password_confirmation, :reffering_code,
+      user_profile: [:first_name, :last_name, :phone_number, :birth_date, :city_id],
       parent_information: [:graduate_status, :occupation, :salary_level],
       student_information: [:education_status, :previous_school],
-      role_types: [])
+      role_types: []
+    )
   end
 end
