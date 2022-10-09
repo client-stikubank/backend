@@ -8,7 +8,7 @@ class UserService::List
   include Dry::Monads::Do.for(:call)
 
   def call(pagination: nil, query: nil, order: nil)
-    records = User.includes(:user_profile)
+    records = User.includes(:user_profile, :roles)
     Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
   end
 end

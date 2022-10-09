@@ -6,7 +6,7 @@ if Doorkeeper::Application.count.zero?
 end
 
 # generate roles
-roles = %w[admin operator student teacher guardian]
+roles = %w[admin operator student teacher guardian speaker]
 
 roles.each do |role|
   Role.find_or_create_by(name: role)
