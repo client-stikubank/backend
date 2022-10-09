@@ -3,6 +3,9 @@
 module Api
   module V1
     class CitiesController < MobileController
+      skip_before_action :doorkeeper_authorize!, raise: false
+      skip_before_action :authenticate_mobile!, raise: false
+
       def index
         cities = CityService::List.new.call(
           query: query_object,

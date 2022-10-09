@@ -3,6 +3,9 @@
 module Api
   module V1
     class ProvincesController < MobileController
+      skip_before_action :doorkeeper_authorize!, raise: false
+      skip_before_action :authenticate_mobile!, raise: false
+
       def index
         provinces = ProvinceService::List.new.call(
           query: query_object,

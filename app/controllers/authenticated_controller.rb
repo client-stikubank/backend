@@ -10,7 +10,7 @@ class AuthenticatedController < ApplicationController
 
   # helper method to access the current user from the token
   def current_user
-    @current_user ||= doorkeeper_token.resource_owner
+    @current_user ||= doorkeeper_token&.resource_owner
   end
 
   def switch_locale(&action)
