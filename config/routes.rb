@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     end
     namespace :api do
       namespace :v1 do
+        resources :cities, only: :index
+        resources :provinces, only: :index
         resources :stages, only: :show
         resources :stage_camps, only: :show
         resources :user_stage_schedules, only: :create

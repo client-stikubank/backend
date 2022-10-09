@@ -13,7 +13,7 @@ class ParentInformation < ApplicationRecord
     when 'smp'
       'SMP'
     when 'sma'
-      'SMA'
+      'SMA/SMK'
     when 'third_diploma'
       'D3'
     when 'fourth_diploma'
