@@ -44,10 +44,10 @@ namespace :provinces_and_cities do
       ['PAPUA SELATAN', ['KABUPATEN MERAUKE', 'KABUPATEN BOVEN DIGOEL', 'KABUPATEN MAPPI', 'KABUPATEN ASMAT']]]
 
     AREA_CITIES.each do |area_level|
-      province = Province.find_or_create_by(name: area_level.first.downcase)
+      province = Province.find_or_create_by(name: area_level.first)
 
       area_level.last.each do |city_name|
-        City.find_or_create_by(province_id: province.id, name: city_name.downcase)
+        City.find_or_create_by(province_id: province.id, name: city_name)
       end
     end
   end
