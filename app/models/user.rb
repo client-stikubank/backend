@@ -55,8 +55,12 @@ class User < ApplicationRecord
     has_role?(:guardian)
   end
 
+  def speaker?
+    has_role?(:speaker)
+  end
+
   def admin_user?
-    superadmin? || operator?
+    superadmin? || operator? || speaker?
   end
 
   def mobile_user?

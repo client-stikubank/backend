@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_14_181616) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -55,6 +55,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_14_181616) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "speaker_id"
+    t.index ["speaker_id"], name: "index_camps_on_speaker_id"
   end
 
   create_table "carnivals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -330,6 +332,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_14_181616) do
   add_foreign_key "assessment_answers", "assessment_questions"
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
+  add_foreign_key "camps", "users", column: "speaker_id"
   add_foreign_key "cities", "provinces"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "parent_informations", "user_profiles"

@@ -19,3 +19,4 @@ id:
       wrong_transaction_subject: subjek transaksi tidak valid
       invalid_reffering_code: Kode Referal tidak valid
       quota_is_full: Kuota pelatihan sudah penuh
+      is_not_speaker: User tidak memiliki role Speaker
