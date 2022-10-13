@@ -18,7 +18,7 @@ module Admin
     private
 
     def user_profile_params
-      params.require(:user_profile).permit(:first_name, :last_name, :phone_number, :birth_date, :city_id,
+      params.require(:user_profile).permit(:first_name, :last_name, :phone_number, :birth_date, :city_id, :image,
       parent_information_attributes: [:id, :graduate_status, :occupation, :salary_level],
       student_information_attributes: [:id, :education_status, :previous_school])
     end

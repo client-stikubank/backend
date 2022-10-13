@@ -34,6 +34,9 @@ Rails.application.routes.draw do
       resources :user_profiles, only: %i[show update]
       resources :users
       resources :user_stage_schedules
+      resources :gifts
+      resources :carnival_gifts
+      resources :user_carnival_gifts, only: %i[index show]
       resources :stocks do
         member do
           get :transactions
@@ -50,6 +53,7 @@ Rails.application.routes.draw do
         resources :stages, only: :show
         resources :stage_camps, only: :show
         resources :user_stage_schedules, only: :create
+        resources :carnival_gifts, only: %i[index show]
 
         get :display_profile, path: '/display_profile', to: 'user_profiles#display_profile'
         put :update_profile, path: '/update_profile', to: 'user_profiles#update_profile'
