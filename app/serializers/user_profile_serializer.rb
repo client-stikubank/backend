@@ -1,7 +1,7 @@
 class UserProfileSerializer
   include JSONAPI::Serializer
 
-  attributes :first_name, :last_name, :phone_number, :birth_date
+  attributes :first_name, :last_name, :phone_number, :birth_date, :image
 
   attribute :city do |object|
     CitySerializer.new(object.city).serializable_hash
