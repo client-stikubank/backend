@@ -9,6 +9,10 @@ class Camp < ApplicationRecord
   has_many :stages, through: :stage_camps
 
   validate :check_speaker
+  validates :reward_amount, length: {
+    minimum: 4,
+    maximum: 4
+  }
 
   private
 
