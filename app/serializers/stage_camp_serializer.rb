@@ -6,6 +6,6 @@ class StageCampSerializer
   end
 
   attribute :camp do |object|
-    object.camp
+    CampSerializer.new(object.camp).serializable_hash
   end
 end
