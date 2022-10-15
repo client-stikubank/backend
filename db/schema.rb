@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_11_205756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -59,6 +59,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
     t.index ["speaker_id"], name: "index_camps_on_speaker_id"
   end
 
+  create_table "carnival_gifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "gift_id"
+    t.uuid "carnival_id"
+    t.integer "quantity", default: 0
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carnival_id"], name: "index_carnival_gifts_on_carnival_id"
+    t.index ["gift_id"], name: "index_carnival_gifts_on_gift_id"
+  end
+
   create_table "carnivals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "status", default: 0, null: false
@@ -85,6 +96,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "gifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "image"
+    t.text "description"
+    t.bigint "amount", default: 0
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_gifts_on_deleted_at"
+    t.index ["name", "deleted_at"], name: "index_gifts_on_name_and_deleted_at", unique: true
   end
 
   create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -275,6 +298,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
     t.index ["to_id"], name: "index_transfers_on_to_id"
   end
 
+  create_table "user_carnival_gifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "carnival_gift_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carnival_gift_id"], name: "index_user_carnival_gifts_on_carnival_gift_id"
+    t.index ["user_id"], name: "index_user_carnival_gifts_on_user_id"
+  end
+
   create_table "user_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.string "first_name"
@@ -284,6 +317,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "city_id"
+    t.string "image"
     t.index ["city_id"], name: "index_user_profiles_on_city_id"
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
@@ -333,6 +367,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
   add_foreign_key "camps", "users", column: "speaker_id"
+  add_foreign_key "carnival_gifts", "carnivals"
+  add_foreign_key "carnival_gifts", "gifts"
   add_foreign_key "cities", "provinces"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "parent_informations", "user_profiles"
@@ -355,6 +391,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_09_141849) do
   add_foreign_key "transfers", "coins"
   add_foreign_key "transfers", "wallets", column: "from_id"
   add_foreign_key "transfers", "wallets", column: "to_id"
+  add_foreign_key "user_carnival_gifts", "carnival_gifts"
+  add_foreign_key "user_carnival_gifts", "users"
   add_foreign_key "user_profiles", "cities"
   add_foreign_key "user_profiles", "users"
   add_foreign_key "user_stage_schedules", "stage_camp_schedules"
