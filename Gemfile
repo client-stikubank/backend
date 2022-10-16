@@ -112,6 +112,7 @@ gem 'doorkeeper', '~> 5.5', '>= 5.5.4'
 
 # Simple, efficient background processing for Ruby [https://github.com/mperham/sidekiq]
 gem 'sidekiq', '~> 6.4', '>= 6.4.1'
+gem 'sidekiq-cron'
 
 # Object-based searching [https://github.com/activerecord-hackery/ransack]
 gem 'ransack', github: 'activerecord-hackery/ransack'
@@ -121,7 +122,7 @@ gem 'cancancan'
 gem 'carrierwave', '~> 2.0'
 gem 'dotenv-rails'
 gem 'jsonapi-serializer'
-gem "paranoia", "~> 2.2"
+gem 'paranoia', '~> 2.2'
 gem 'pry-rails'
 
 

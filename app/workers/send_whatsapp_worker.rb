@@ -2,6 +2,7 @@ class SendWhatsappWorker
   include Sidekiq::Worker
 
   def perform(phone_numbers, message, type)
+    return if phone_numbers.empty?
     #type: ['send, broadcast']
     case type
     when 'broadcast'
