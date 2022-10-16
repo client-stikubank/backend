@@ -21,3 +21,4 @@ id:
       quota_is_full: Kuota pelatihan sudah penuh
       is_not_speaker: User tidak memiliki role Speaker
       has_active_schedule: Masih ada pelatihan yang sedang berjalan!
+      more_than_joined_count: 'Kuota harus lebih dari %{count}'
