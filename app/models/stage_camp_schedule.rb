@@ -5,7 +5,11 @@ class StageCampSchedule < ApplicationRecord
   has_many :user_stage_schedules
   has_many :users, through: :user_stage_schedules
 
-  def quota_available?
-    user_stage_schedules.count < quota 
+  def joined_count
+    user_stage_schedules.not_rejected.count
+  end
+
+  def is_full?
+    joined_count >= quota 
   end
 end

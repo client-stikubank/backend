@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_15_180740) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_054513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -328,6 +328,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_15_180740) do
     t.uuid "stage_camp_schedule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
     t.index ["stage_camp_schedule_id"], name: "index_user_stage_schedules_on_stage_camp_schedule_id"
     t.index ["user_id"], name: "index_user_stage_schedules_on_user_id"
   end

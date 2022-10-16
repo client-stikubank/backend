@@ -20,3 +20,4 @@ id:
       invalid_reffering_code: Kode Referal tidak valid
       quota_is_full: Kuota pelatihan sudah penuh
       is_not_speaker: User tidak memiliki role Speaker
+      has_active_schedule: Masih ada pelatihan yang sedang berjalan!

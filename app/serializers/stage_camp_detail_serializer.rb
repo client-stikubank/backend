@@ -12,7 +12,8 @@ class StageCampDetailSerializer
   attribute :stage_camp_schedules do |object|
     schedules = []
     object.stage_camp_schedules.order(started_at: :asc).group_by(&:started_at).each do |key, group|
-      schedules << { date: key, schedules: group }
+      schedule = group.map{ |g| g.attributes.symbolize_keys.merge!(joined_count: g.joined_count, full: g.is_full) }
+      schedules << { date: key, schedules: schedule }
     end
     schedules
   end

@@ -18,3 +18,5 @@ en:
       greater_than_coin_max_supply: 'cannot be greater than the maximum supply'
       wrong_transaction_subject: 'transaction subject is not valid'
       invalid_reffering_code: 'Refferal Code is not valid'
+      quota_is_full: Quota is full
+      has_active_schedule: Has active schedule, please finish it first!
