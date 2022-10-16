@@ -27,8 +27,8 @@ class UserStageSchedule < ApplicationRecord
   end
 
   def check_status
-    return unless user.active_schedule
+    return unless user.active_camp
 
-    errors.add(:base, I18n.t('errors.message.has_active_schedule'))
+    errors.add(:base, I18n.t('errors.message.has_active_camp'))
   end
 end

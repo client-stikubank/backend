@@ -21,7 +21,7 @@ module Admin
     end
 
     def show
-      @carnival ? serialize!('CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
+      @carnival ? serialize!('Admin::CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
     end
 
     def update
@@ -32,7 +32,7 @@ module Admin
     def activate
       @carnival.activate!
 
-      @carnival ? serialize!('CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
+      @carnival ? serialize!('Admin::CarnivalDetail', @carnival) : error!(I18n.t('controllers.errors.data_not_found'))
     end
 
     private

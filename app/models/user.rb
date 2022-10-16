@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_one :refferal, class_name: 'Refferal', foreign_key: :reffered_by_id
   has_one :user_profile, dependent: :destroy
-  has_one :active_schedule, -> { active }, class_name: 'UserStageSchedule'
+  has_one :active_camp, -> { active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
 
   has_many :refferals
   has_many :user_stage_schedules
@@ -28,6 +28,15 @@ class User < ApplicationRecord
   after_create :build_refferal, if: Proc.new { reffering_code.present? }
 
   after_commit :send_registration_mail, on: :create
+
+  def current_stage
+    finished_schedules = current_schedules.finish
+    return 1 unless finished_schedules.present?
+
+    stage = finished_schedules.includes(:stage).order('stages.level DESC').first.stage
+
+    stage&.level || 1
+  end
 
   def role
     roles.first.name.titleize
