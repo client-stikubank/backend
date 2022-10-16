@@ -5,6 +5,8 @@ class StageCampSchedule < ApplicationRecord
   has_many :user_stage_schedules
   has_many :users, through: :user_stage_schedules
 
+  scope :upcoming, -> { where('started_at > ?', Time.zone.now) }
+
   def joined_count
     user_stage_schedules.not_rejected.count
   end

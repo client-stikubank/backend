@@ -19,6 +19,6 @@ class StageCampScheduleSerializer
   end
 
   attribute :title do |object|
-    "#{object.time_start} - #{object.time_end}, 0/#{object.quota}"
+    "#{object.time_start} - #{object.time_end}, #{object.joined_count}/#{object.quota}"
   end
 end
