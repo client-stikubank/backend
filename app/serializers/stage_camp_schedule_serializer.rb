@@ -1,7 +1,7 @@
 class StageCampScheduleSerializer
   include JSONAPI::Serializer
 
-  attributes :started_at, :time_start, :time_end, :quota, :joined_count, :is_full?
+  attributes :started_at, :time_start, :time_end, :quota, :link, :joined_count, :is_full?
 
   attribute :className do |_object|
     'bg-success text-white border-0'

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class UserStageSchedule < ApplicationRecord
-  ACTIVE_STATUSES = [:pending, :running]
+  ACTIVE_STATUSES = [:pending, :confirmed]
 
-  enum status: { pending: 0, running: 1, finish: 2, rejected: 3, absent: 4 }
+  enum status: { pending: 0, confirmed: 1, finish: 2, rejected: 3, absent: 4 }
 
   belongs_to :user
   belongs_to :stage_camp_schedule

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StageCampSchedule < ApplicationRecord
-  enum status: { pending: 0, reminded: 1, completed: 2 }
+  enum status: { pending: 0, reminded: 1, claim_time: 2, completed: 3, closed: 4 }
 
   belongs_to :stage_camp
   has_many :user_stage_schedules
@@ -21,6 +21,12 @@ class StageCampSchedule < ApplicationRecord
 
   def started_datetime
     times = time_start.split(':').map{ |time| time.to_i }
+
+    started_at.in_time_zone.change(hour: times[0], min: times[1])
+  end
+
+  def ended_datetime
+    times = time_end.split(':').map{ |time| time.to_i }
 
     started_at.in_time_zone.change(hour: times[0], min: times[1])
   end

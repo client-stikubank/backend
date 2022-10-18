@@ -59,6 +59,7 @@ Rails.application.routes.draw do
         put :update_profile, path: '/update_profile', to: 'user_profiles#update_profile'
         put :update_password, path: '/update_password', to: 'users#update_password'
         get '/active_carnival', to: 'carnivals#active_carnival'
+        put '/confirm_active_camp', to: 'carnivals#confirm_active_camp'
       end
     end
   end
