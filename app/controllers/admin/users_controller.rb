@@ -29,7 +29,7 @@ module Admin
     end
 
     def show
-      @user ? serialize!(User, @user) : error!(I18n.t('controllers.errors.data_not_found'))
+      @user ? serialize!(User, @user) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def destroy

@@ -16,11 +16,11 @@ module Admin
     end
 
     def show
-      @stock ? serialize!('StockDetail', @stock) : error!(I18n.t('controllers.errors.data_not_found'))
+      @stock ? serialize!('StockDetail', @stock) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def transactions
-      @stock ? serialize!(Transaction, @stock.transactions) : error!(I18n.t('controllers.errors.data_not_found'))
+      @stock ? serialize!(Transaction, @stock.transactions) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     private

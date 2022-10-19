@@ -13,7 +13,7 @@ module Api
 
       def display_profile
         user = @user_profile.user
-        @user_profile ? serialize!('User', user) : error!(I18n.t('controllers.errors.data_not_found'))
+        @user_profile ? serialize!('User', user) : error!(I18n.t('c.errors.data_not_found'))
       end
 
       private

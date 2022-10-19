@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StageCampSchedule < ApplicationRecord
+  ACTIVE_STATUSES = [:pending, :reminded, :claim_time]
+
   enum status: { pending: 0, reminded: 1, claim_time: 2, completed: 3, closed: 4 }
 
   belongs_to :stage_camp

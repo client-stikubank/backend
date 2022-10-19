@@ -28,7 +28,7 @@ module Admin
     end
 
     def show
-      @carnival_gift ? serialize!(CarnivalGift, @carnival_gift) : error!(I18n.t('controllers.errors.data_not_found'))
+      @carnival_gift ? serialize!(CarnivalGift, @carnival_gift) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def destroy

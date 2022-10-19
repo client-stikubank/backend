@@ -4,7 +4,7 @@ module Api
       before_action :set_stage_camp, only: :show
 
       def show
-        @stage_camp ? serialize!('StageCampDetail', @stage_camp) : error!(I18n.t('controllers.errors.data_not_found'))
+        @stage_camp ? serialize!('StageCampDetail', @stage_camp) : error!(I18n.t('c.errors.data_not_found'))
       end
 
       private

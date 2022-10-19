@@ -28,7 +28,7 @@ module Admin
     end
 
     def show
-      @province ? serialize!(Province, @province) : error!(I18n.t('controllers.errors.data_not_found'))
+      @province ? serialize!(Province, @province) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def destroy

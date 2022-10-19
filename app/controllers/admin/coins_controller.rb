@@ -16,7 +16,7 @@ module Admin
     end
 
     def show
-      @coin ? serialize!('CoinDetail', @coin) : error!(I18n.t('controllers.errors.data_not_found'))
+      @coin ? serialize!('CoinDetail', @coin) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def update

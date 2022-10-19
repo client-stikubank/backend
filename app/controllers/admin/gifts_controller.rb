@@ -28,7 +28,7 @@ module Admin
     end
 
     def show
-      @gift ? serialize!(Gift, @gift) : error!(I18n.t('controllers.errors.data_not_found'))
+      @gift ? serialize!(Gift, @gift) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def destroy

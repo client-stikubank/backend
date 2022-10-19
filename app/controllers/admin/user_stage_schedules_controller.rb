@@ -16,7 +16,7 @@ module Admin
     end
 
     def show
-      @user_stage_schedule ? serialize!('Admin::UserStageSchedule', @user_stage_schedule) : error!(I18n.t('controllers.errors.data_not_found'))
+      @user_stage_schedule ? serialize!('Admin::UserStageSchedule', @user_stage_schedule) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def update

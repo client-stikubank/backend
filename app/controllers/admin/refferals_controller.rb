@@ -17,7 +17,7 @@ module Admin
 
 
     def show
-      @refferal ? serialize!(Refferal, @refferal) : error!(I18n.t('controllers.errors.data_not_found'))
+      @refferal ? serialize!(Refferal, @refferal) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     private

@@ -21,7 +21,7 @@ class PermissionService::Destroy
   private
 
   def call_destroy_record
-    return Failure([:error, I18n.t('controllers.errors.data_not_found')]) unless record.present?
+    return Failure([:error, I18n.t('c.errors.data_not_found')]) unless record.present?
 
     if record.destroy
       Success(record)

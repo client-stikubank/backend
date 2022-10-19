@@ -4,7 +4,7 @@ module Api
       before_action :set_stage, only: :show
 
       def show
-        @stage ? serialize!(Stage, @stage) : error!(I18n.t('controllers.errors.data_not_found'))
+        @stage ? serialize!(Stage, @stage) : error!(I18n.t('c.errors.data_not_found'))
       end
 
       private

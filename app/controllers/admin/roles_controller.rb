@@ -22,7 +22,7 @@ module Admin
     end
 
     def show
-      @role ? serialize!(Role, @role) : error!(I18n.t('controllers.errors.data_not_found'))
+      @role ? serialize!(Role, @role) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     private

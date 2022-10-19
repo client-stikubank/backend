@@ -22,7 +22,7 @@ module Admin
     end
 
     def show
-      @permission ? serialize!(Permission, @permission) : error!(I18n.t('controllers.errors.data_not_found'))
+      @permission ? serialize!(Permission, @permission) : error!(I18n.t('c.errors.data_not_found'))
     end
 
     def update

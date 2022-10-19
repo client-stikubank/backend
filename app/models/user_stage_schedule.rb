@@ -15,8 +15,17 @@ class UserStageSchedule < ApplicationRecord
   validate :check_quota
   validate :check_status
 
-  scope :current, -> { joins(:carnival).where(carnival: { status: :active }) }
-  scope :active, -> { current.where(status: ACTIVE_STATUSES) }
+  scope :current, -> {
+    joins(:carnival).where(
+      carnival: { status: :active },
+    )
+  }
+  scope :active, -> {
+    current.joins(:stage_camp_schedule).where(
+      status: ACTIVE_STATUSES,
+      stage_camp_schedule: { status: StageCampSchedule::ACTIVE_STATUSES }
+    )
+  }
 
   private
 
