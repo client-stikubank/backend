@@ -13,7 +13,7 @@ class UserStageSchedule < ApplicationRecord
   has_one :carnival, through: :stage
 
   validate :check_quota
-  validate :check_status
+  validate :check_status, on: :create
 
   scope :current, -> {
     joins(:carnival).where(
