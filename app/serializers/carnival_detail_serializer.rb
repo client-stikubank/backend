@@ -4,6 +4,6 @@ class CarnivalDetailSerializer
   attributes :name, :description, :finished_at
 
   attribute :stages do |object|
-    object.stages
+    CarnivalStagesSerializer.new(object.stages).serializable_hash
   end
 end
