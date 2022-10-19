@@ -35,7 +35,7 @@ class User < ApplicationRecord
 
     stage = finished_schedules.includes(:stage).order('stages.level DESC').first.stage
 
-    stage&.level || 1
+    (stage&.level || 0)  + 1
   end
 
   def role
