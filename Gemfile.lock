@@ -440,6 +440,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.2)
   ransack!
+  redis (~> 4.0)
   reform (~> 2.6)
   reform-rails (~> 0.2.2)
   rolify
