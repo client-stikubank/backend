@@ -1,6 +1,6 @@
 class RewardTransactionWorker
   include Sidekiq::Worker
-  sidekiq_options queue: :critical
+  sidekiq_options queue: :critical, retry: false
 
   def perform(reward_id)
     reward = Reward.find(reward_id)

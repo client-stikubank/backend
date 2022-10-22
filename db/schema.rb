@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_18_125224) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_22_224853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -284,6 +284,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_125224) do
     t.integer "subject", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sourceable_id", "transactable_id", "subject"], name: "dup_transaction_index", unique: true
     t.index ["sourceable_type", "sourceable_id"], name: "index_transactions_on_sourceable"
     t.index ["transactable_type", "transactable_id"], name: "index_transactions_on_transactable"
   end
