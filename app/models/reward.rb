@@ -37,6 +37,6 @@ class Reward < ApplicationRecord
   end
 
   def process_transaction
-    RewardTransactionWorker.perform_async(id)
+    RewardTransactionWorker.perform_in(5.seconds, id)
   end
 end
