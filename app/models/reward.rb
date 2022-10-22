@@ -24,7 +24,7 @@ class Reward < ApplicationRecord
     end
 
     event :complete do
-      transitions from: :processing, to: :completed, guard: :stock_available?
+      transitions from: [:processing, :pending], to: :completed, guard: :stock_available?
     end
 
     event :pend do
@@ -37,6 +37,6 @@ class Reward < ApplicationRecord
   end
 
   def process_transaction
-    RewardTransactionWorker.perform_in(5.seconds, id)
+    RewardTransactionWorker.perform_async(id)
   end
 end
