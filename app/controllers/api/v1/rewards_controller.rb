@@ -11,7 +11,7 @@ module Api
           record: current_user.rewards
         )
 
-        serialize!(Reward, rewards, paginate(rewards))
+        serialize!(Reward, rewards, paginate(current_user.rewards))
       end
     end
   end
