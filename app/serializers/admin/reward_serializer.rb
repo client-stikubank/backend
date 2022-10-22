@@ -4,7 +4,7 @@ module Admin
 
     attributes :amount, :status, :reward_type
 
-    attribute :user |object| do
+    attribute :user do |object|
       UserSerializer.new(object.to.user).serializable_hash
     end
 
