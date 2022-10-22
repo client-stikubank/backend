@@ -26,6 +26,7 @@ class UserStageSchedule < ApplicationRecord
       stage_camp_schedule: { status: StageCampSchedule::ACTIVE_STATUSES }
     )
   }
+  scope :history, -> { not_pending.not_confirmed }
 
   private
 

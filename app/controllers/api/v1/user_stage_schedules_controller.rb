@@ -8,7 +8,7 @@ module Api
           order: order_object
         )
 
-        @user_stage_schedules = current_user.user_stage_schedules
+        @user_stage_schedules = current_user.user_stage_schedules.history.order('created_at DESC')
         serialize!('UserStageSchedule', @user_stage_schedules, paginate(@user_stage_schedules))
       end
 
