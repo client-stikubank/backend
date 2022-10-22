@@ -11,6 +11,10 @@ class UserSerializer
     object.role
   end
 
+  attribute :wallet_balance do |object|
+    object.wallets.joins(:coin).in_order_of(:coin_id, Coin.pluck(:id)).pluck(:balance)
+  end
+
   attribute :user_profile do |object|
     UserProfileSerializer.new(object.user_profile).serializable_hash
   end

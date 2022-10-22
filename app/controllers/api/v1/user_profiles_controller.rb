@@ -8,12 +8,11 @@ module Api
       def update_profile
         user_profile = UserProfileService::Update.new(params: user_profile_params, record: @user_profile).call
 
-        user_profile.instance_of?(UserProfile) ? serialize!(User, user_profile.user) : error!(user_profile.failure[1])
+        user_profile.instance_of?(UserProfile) ? serialize!(User, current_user) : error!(user_profile.failure[1])
       end
 
       def display_profile
-        user = @user_profile.user
-        @user_profile ? serialize!('User', user) : error!(I18n.t('c.errors.data_not_found'))
+        @user_profile ? serialize!('User', current_user) : error!(I18n.t('c.errors.data_not_found'))
       end
 
       private
@@ -25,7 +24,7 @@ module Api
       end
 
       def set_user_profile
-        @user_profile = UserProfile.find_by(id: current_user.user_profile.id)
+        @user_profile = current_user.user_profile
       end
     end
   end

@@ -12,6 +12,8 @@ class UserStageSchedule < ApplicationRecord
   has_one :stage, through: :stage_camp
   has_one :carnival, through: :stage
 
+  has_many :wallets
+
   validate :check_quota
   validate :check_status, on: :create
 

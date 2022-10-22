@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 class Coin < ApplicationRecord
-  default_scope { order(max_supply: :asc) }
+  default_scope { ordered }
 
   mount_uploader :image, ImageUploader
 
   enum name: { mamo: 0, beryl: 1, ale: 2, jenny: 3 }
+
   has_one :stock, dependent: :destroy
   has_many :wallets, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :max_supply, presence: true, numericality: { greater_than_or_equal_to: 0 }
+
+  scope :ordered, -> { in_order_of(:name, %i[beryl ale jenny mamo]) }
 
   after_create :build_stock, :build_wallets
 
