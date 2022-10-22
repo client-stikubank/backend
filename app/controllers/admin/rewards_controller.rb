@@ -12,11 +12,11 @@ module Admin
       )
 
       @rewards = rewards.success
-      serialize!(Reward, @rewards, paginate(@rewards))
+      serialize!('Admin::Reward', @rewards, paginate(@rewards))
     end
 
     def process_transaction
-      @reward.process_transaction ? serialize!(Reward, @reward) : error!(I18n.t('c.errors.transaction_fail'))
+      @reward.process_transaction ? serialize!('Admin::Reward', @reward) : error!(I18n.t('c.errors.transaction_fail'))
     end
 
     private
