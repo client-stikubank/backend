@@ -1,6 +1,17 @@
 module Api
   module V1
     class UserStageSchedulesController < MobileController
+      def index
+        user_stage_schedules = UserStageScheduleService::List.new.call(
+          query: query_object,
+          pagination: pagination_object,
+          order: order_object
+        )
+
+        @user_stage_schedules = current_user.user_stage_schedules
+        serialize!('UserStageSchedule', @user_stage_schedules, paginate(@user_stage_schedules))
+      end
+
       def create
         user_stage_schedule = UserStageScheduleService::Create.new(
           params: user_stage_schedule_params,

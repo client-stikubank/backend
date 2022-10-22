@@ -52,7 +52,7 @@ Rails.application.routes.draw do
         resources :provinces, only: :index
         resources :stages, only: :show
         resources :stage_camps, only: :show
-        resources :user_stage_schedules, only: :create
+        resources :user_stage_schedules, only: %i[index create]
         resources :carnival_gifts, only: %i[index show]
 
         get :display_profile, path: '/display_profile', to: 'user_profiles#display_profile'
