@@ -3,7 +3,8 @@
 module Api
   module V1
     class RewardsController < AdminController
-      before_action :set_reward, only: %i[update]
+      before_action :set_reward, only: %i[process_transaction]
+
       def index
         rewards = RewardService::List.new.call(
           query: query_object,
