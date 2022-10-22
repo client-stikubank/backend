@@ -16,9 +16,7 @@ module Admin
     end
 
     def process_transaction
-      @reward.process_transaction
-
-      @reward ? serialize!('Admin::Reward', @reward) : error!(I18n.t('c.errors.transaction_fail'))
+      @reward.process_transaction ? serialize!('Admin::Reward', @reward) : error!(I18n.t('c.errors.transaction_fail'))
     end
 
     private
