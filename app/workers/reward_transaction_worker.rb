@@ -9,10 +9,10 @@ class RewardTransactionWorker
       ActiveRecord::Base.transaction do
         Transaction.sender.create!(sourceable: reward, transactable: reward.from)
         Transaction.receiver.create!(sourceable: reward, transactable: reward.to)
-        reward.complete
+        reward.completed!
       end
     rescue ActiveRecord::RecordInvalid
-      # reward.pend unless reward.pending?
+      reward.pending!
     end
   end
 end
