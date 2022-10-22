@@ -11,13 +11,15 @@ class Transaction < ApplicationRecord
   private
 
   def update_balance!
-    case subject
-    when 'sender'
-      transactable.update(balance: transactable.balance - sourceable.amount)
-    when 'receiver'
-      transactable.update(balance: transactable.balance + sourceable.amount)
-    else
-      errors.add(:base, I18n.t('errors.messages.wrong_transaction_subject'))
+    ActiveRecord::Base.transaction do
+      case subject
+      when 'sender'
+        transactable.update(balance: transactable.balance - sourceable.amount)
+      when 'receiver'
+        transactable.update(balance: transactable.balance + sourceable.amount)
+      else
+        errors.add(:base, I18n.t('errors.messages.wrong_transaction_subject'))
+      end
     end
   end
 end
