@@ -22,3 +22,4 @@ id:
       is_not_speaker: User tidak memiliki role Speaker
       has_active_camp: Masih ada pelatihan yang sedang berjalan!
       more_than_joined_count: 'Kuota harus lebih dari %{count}'
+      stock_balance_not_enough: Tidak bisa merubah Max. Supply karena stock kurang
