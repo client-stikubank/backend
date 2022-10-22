@@ -33,7 +33,7 @@ class UserStageSchedule < ApplicationRecord
   def finish_and_claim!
     self.finish!
 
-    Coin.each_with_index do |coin, index|
+    Coin.all.each_with_index do |coin, index|
       next if camp.reward_amount[index] === 0
 
       stock = Stock.find_by(coin: coin)
