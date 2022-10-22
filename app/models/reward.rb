@@ -34,10 +34,8 @@ class Reward < ApplicationRecord
 
   def process_transaction
     return unless stock_available?
+    reward.process
 
-    begin
-      reward.process
-      RewardTransactionWorker.perform_async(id)
-    end
+    RewardTransactionWorker.perform_async(id)
   end
 end

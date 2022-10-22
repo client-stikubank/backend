@@ -9,6 +9,8 @@ class RewardTransactionWorker
       Transaction.sender.create!(sourceable: reward, transactable: reward.from)
       Transaction.receiver.create!(sourceable: reward, transactable: reward.to)
       reward.complete
+    rescue
+      reward.pending
     end
   end
 end

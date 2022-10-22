@@ -42,6 +42,11 @@ Rails.application.routes.draw do
           get :transactions
         end
       end
+      resources :rewards do
+        member do
+          post :process_transaction
+        end
+      end
       post '/login', to: 'login#create'
 
       put :update_password, path: '/:id/update_password', to: 'users#update_password'

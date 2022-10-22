@@ -5,3 +5,4 @@ id:
       cant_claim: 'Pengguna tidak diizinkan untuk Claim Reward'
       not_in_claim_time: 'Klaim reward pelatihan 1 jam sebelum pelatihan dimulai'
       claim_fail: 'Gagal Claim Reward'
+      transaction_fail: 'Gagal melakukan transaksi'
