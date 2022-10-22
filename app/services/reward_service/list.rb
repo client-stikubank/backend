@@ -9,7 +9,7 @@ class RewardService::List
 
   def call(pagination: nil, query: nil, order: nil, record: Reward.all)
     records = record.order(
-      order ? order_query(Reward, order) : 'created_at DESC'
+      order ? order_query(record, order) : 'created_at DESC'
     )
     Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
   end
