@@ -10,7 +10,7 @@ class RewardTransactionWorker
       Transaction.receiver.create!(sourceable: reward, transactable: reward.to)
       reward.complete
     rescue
-      reward.pending!
+      reward.pend unless reward.pending?
     end
   end
 end
