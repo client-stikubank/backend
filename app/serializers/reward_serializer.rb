@@ -4,7 +4,7 @@ class RewardSerializer
   attributes :amount, :status, :reward_type
 
   attribute :coin do |object|
-    CoinSerialzer.new(object.coin).serializable_hash
+    CoinSerializer.new(object.coin).serializable_hash
   end
 
   attribute :activitable do |object|
