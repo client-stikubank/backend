@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :current_schedules, -> { current }, class_name: 'UserStageSchedule'
   has_many :stage_camp_schedules, through: :user_stage_schedules
   has_many :wallets
+  has_many :rewards, through: :wallets
 
   validate  :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
 

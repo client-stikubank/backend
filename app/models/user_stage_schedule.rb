@@ -9,10 +9,10 @@ class UserStageSchedule < ApplicationRecord
   belongs_to :stage_camp_schedule
 
   has_one :stage_camp, through: :stage_camp_schedule
+  has_one :camp, through: :stage_camp
   has_one :stage, through: :stage_camp
   has_one :carnival, through: :stage
-
-  has_many :wallets
+  has_many :rewards, foreign_key: :activitable_id
 
   validate :check_quota
   validate :check_status, on: :create
@@ -29,6 +29,26 @@ class UserStageSchedule < ApplicationRecord
     )
   }
   scope :history, -> { not_pending.not_confirmed }
+
+  def finish_and_claim!
+    self.finish!
+
+    Coin.each_with_index do |coin, index|
+      next if camp.reward_amount[index] === 0
+
+      stock = Stock.find_by(coin: coin)
+      wallet = user.wallets.find_by(coin: coin)
+
+      Reward.create!(
+        amount: camp.reward_amount[index],
+        coin: coin,
+        reward_type: :join_camp,
+        activitable: self,
+        from: stock,
+        to: coin
+      )
+    end
+  end
 
   private
 

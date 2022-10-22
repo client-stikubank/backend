@@ -1,5 +1,6 @@
 class AbsentUserWorker
   include Sidekiq::Worker
+  sidekiq_options queue: :critical
 
   def perform(schedule_id, phone_numbers)
     schedule = StageCampSchedule.find(schedule_id)

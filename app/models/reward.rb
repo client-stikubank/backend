@@ -5,13 +5,15 @@ class Reward < ApplicationRecord
 
   enum reward_type: { join_camp: 0 }
 
-  has_many   :transactions, as: :sourceable, dependent: :destroy
   belongs_to :from, class_name: 'Stock'
   belongs_to :to, class_name: 'Wallet'
   belongs_to :coin
   belongs_to :activitable, polymorphic: true
+  has_many :transactions, as: :sourceable, dependent: :destroy
 
   validates :amount, presence: true
+
+  after_commit :process_transaction, on: :create
 
   aasm :status do
     state :pending, initial: true
@@ -26,5 +28,16 @@ class Reward < ApplicationRecord
     end
   end
 
-  def stock_available?; end
+  def stock_available?
+    from.balance > amount
+  end
+
+  def process_transaction
+    return unless stock_available?
+
+    begin
+      reward.process
+      RewardTransactionWorker.perform_async(id)
+    end
+  end
 end
