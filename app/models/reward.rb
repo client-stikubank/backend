@@ -26,6 +26,10 @@ class Reward < ApplicationRecord
     event :complete do
       transitions from: :processing, to: :completed, guard: :stock_available?
     end
+
+    event :pending! do
+      transitions from: :processing, to: :pending
+    end
   end
 
   def stock_available?
