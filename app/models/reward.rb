@@ -20,7 +20,7 @@ class Reward < ApplicationRecord
     state :processing, :completed
 
     event :process do
-      transitions from: :pending, to: :processing, guard: :stock_available?
+      transitions from: :pending, to: :processing, guard: :stock_available?, after: :process_transaction
     end
 
     event :complete do
@@ -37,9 +37,6 @@ class Reward < ApplicationRecord
   end
 
   def process_transaction
-    return unless stock_available?
-    self.process
-
     RewardTransactionWorker.perform_async(id)
   end
 end
