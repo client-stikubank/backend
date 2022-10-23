@@ -2,7 +2,7 @@ module Admin
   class RewardSerializer
     include JSONAPI::Serializer
 
-    attributes :amount, :status, :reward_type
+    attributes :amount, :status, :reward_type, :updated_at
 
     attribute :user do |object|
       UserSerializer.new(object.to.user).serializable_hash

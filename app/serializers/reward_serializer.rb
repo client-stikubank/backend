@@ -1,7 +1,7 @@
 class RewardSerializer
   include JSONAPI::Serializer
 
-  attributes :amount, :status, :reward_type
+  attributes :amount, :status, :reward_type, :updated_at
 
   attribute :coin do |object|
     CoinSerializer.new(object.coin).serializable_hash

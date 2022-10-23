@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Reward < ApplicationRecord
+  default_scope { order(updated_at: :desc) }
+
   include AASM
 
   enum reward_type: { join_camp: 0 }
