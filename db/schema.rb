@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_22_224853) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_05_152149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -103,10 +103,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_224853) do
     t.string "name"
     t.string "image"
     t.text "description"
-    t.bigint "amount", default: 0
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "reward_amount", default: [0, 0, 0, 0], array: true
     t.index ["deleted_at"], name: "index_gifts_on_deleted_at"
     t.index ["name", "deleted_at"], name: "index_gifts_on_name_and_deleted_at", unique: true
   end
