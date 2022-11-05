@@ -123,6 +123,7 @@ gem 'carrierwave', '~> 2.0'
 gem 'dotenv-rails'
 gem 'fog-aws'
 gem 'jsonapi-serializer'
+gem 'mini_magick'
 gem 'paranoia', '~> 2.2'
 gem 'pry-rails'
 
