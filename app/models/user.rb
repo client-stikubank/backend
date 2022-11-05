@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :wallets
   has_many :rewards, through: :wallets
 
-  validate  :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
+  validate :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
 
   attr_accessor :generated_password, :role_types, :reffering_code, :student_information, :parent_information
 

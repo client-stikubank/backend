@@ -7,9 +7,10 @@ CarrierWave.configure do |config|
       :region => 'sgp1',
       :endpoint => 'https://sgp1.digitaloceanspaces.com'
     }
+    config.asset_host = "https://#{ENV['DO_SPACE_BUCKET']}.sgp1.digitaloceanspaces.com"
     config.enable_processing = true
     config.fog_attributes = { 'Cache-Control' => 'max-age=315576000' }
-    config.fog_directory = 'youthcamp-carrierwave'
+    config.fog_directory = ENV['DO_SPACE_BUCKET']
     config.fog_provider = 'fog/aws'
     config.storage = :fog
   else
