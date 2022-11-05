@@ -24,7 +24,7 @@ module Admin
 
     def update
       unless params.dig(:user, :user_profile_attributes, :image)
-        @user.user_profile.image.source.cache!
+        @user.user_profile.image.cache!
       end
       user = UserService::Update.new(params: edit_user_params, record: @user).call
 
