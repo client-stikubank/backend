@@ -40,7 +40,7 @@ module Admin
     private
 
     def gift_params
-      params.require(:gift).permit(:name, :image, :description, :amount)
+      params.require(:gift).permit(:name, :image, :description, :reward_amount)
     end
 
     def set_gift
