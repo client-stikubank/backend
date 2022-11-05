@@ -23,9 +23,6 @@ module Admin
     end
 
     def update
-      unless params.dig(:user, :user_profile_attributes, :image)
-        params[:user][:user_profile_attributes][:image] = @user.user_profile.image
-      end
       user = UserService::Update.new(params: edit_user_params, record: @user).call
 
       user.instance_of?(User) ? serialize!(User, user) : error!(user.failure[1])

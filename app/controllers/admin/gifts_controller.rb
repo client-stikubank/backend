@@ -22,9 +22,6 @@ module Admin
     end
 
     def update
-      unless params.dig(:gift, :image)
-        @gift.image.cache!
-      end
       gift = GiftService::Update.new(params: gift_params, record: @gift).call
 
       gift.instance_of?(Gift) ? serialize!(Gift, gift) : error!(gift.failure[1])
