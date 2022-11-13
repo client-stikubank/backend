@@ -2,27 +2,29 @@
 
 require "dry/monads/do"
 
-class UserStageScheduleService::Update
+class UserCarnivalGiftService::Create
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  attr_reader :params, :record
+  attr_reader :params, :user
 
-  def initialize(params:, record:)
+  def initialize(params:, user:)
     @params = params
-    @record = record
+    @user = user
   end
 
   def call
     ActiveRecord::Base.transaction(requires_new: true) do
-      yield call_update_record
+      yield call_create_record
     end
   end
 
   private
 
-  def call_update_record
-    if record.update(params)
+  def call_create_record
+    record = user ? user.user_carnival_gifts.new(carnival_gift_id: params[:carnival_gift_id]) : UserCarnivalGift.new(params)
+
+    if record.save
       Success(record)
     else
       Failure([:error, record.errors])

@@ -13,10 +13,10 @@ class StageCampDetailSerializer
     upcoming_schedules = object.stage_camp_schedules.upcoming
     schedules = []
 
-    return schedules unless upcoming_schedules.present?
+    return schedules if upcoming_schedules.blank?
 
     upcoming_schedules.order(started_at: :asc).group_by(&:started_at).each do |key, group|
-      schedule = group.map{ |g| g.attributes.symbolize_keys.merge!(joined_count: g.joined_count, full: g.is_full?) }
+      schedule = group.map{ |g| g.attributes.symbolize_keys.merge!(joined_count: g.joined_count, full: g.full?) }
       schedules << { date: key, schedules: schedule }
     end
     schedules

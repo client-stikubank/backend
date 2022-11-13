@@ -8,7 +8,9 @@ class UserCarnivalGiftService::List
   include Dry::Monads::Do.for(:call)
 
   def call(pagination: nil, query: nil, order: nil)
-    records = UserCarnivalGift.all
+    records = UserCarnivalGift.order(
+      order ? order_query(UserCarnivalGift, order) : 'created_at DESC'
+    )
     Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
   end
 end

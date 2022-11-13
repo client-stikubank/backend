@@ -55,7 +55,7 @@ class UserStageSchedule < ApplicationRecord
   private
 
   def check_quota
-    return unless stage_camp_schedule.is_full?
+    return unless stage_camp_schedule.full?
 
     errors.add(:base, I18n.t('errors.messages.quota_is_full'))
   end

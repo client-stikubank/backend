@@ -8,7 +8,7 @@ class StageCampService::List
   include Dry::Monads::Do.for(:call)
 
   def call(query: nil, order: nil)
-    records = StageCampService.order(order ? order_query(StageCampService, order) : 'created_at DESC')
+    records = StageCamp.order(order ? order_query(StageCamp, order) : 'created_at DESC')
     Success(records.ransack(query.query).result)
   end
 end

@@ -6,5 +6,5 @@ class UserCarnivalGift < ApplicationRecord
 
   has_many :user_carnival_gifts, dependent: :destroy
 
-  enum status: [:booked, :redeemed], _default: :booked
+  enum status: [:booked, :redeemed,], _default: :booked
 end

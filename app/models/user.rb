@@ -9,10 +9,11 @@ class User < ApplicationRecord
   has_one :active_camp, -> { active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
 
   has_many :refferals
-  has_many :user_stage_schedules
+  has_many :user_stage_schedules, dependent: :destroy
+  has_many :user_carnival_gifts, dependent: :destroy
   has_many :current_schedules, -> { current }, class_name: 'UserStageSchedule'
   has_many :stage_camp_schedules, through: :user_stage_schedules
-  has_many :wallets
+  has_many :wallets, dependent: :destroy
   has_many :rewards, through: :wallets
 
   validate :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
