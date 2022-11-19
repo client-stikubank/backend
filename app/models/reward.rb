@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Reward < ApplicationRecord
-  default_scope { order(updated_at: :desc) }
+  default_scope { joins(:coin).order(updated_at: :desc) }
 
   include AASM
 
