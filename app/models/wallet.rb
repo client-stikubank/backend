@@ -8,5 +8,5 @@ class Wallet < ApplicationRecord
 
   has_many :rewards, foreign_key: :to_id, dependent: :destroy
 
-  scope :ordered, -> { includes(:coin).order('coins.name ASC') }
+  scope :ordered, -> { joins(:coin).order('coins.name ASC') }
 end
