@@ -12,7 +12,7 @@ class UserSerializer
   end
 
   attribute :wallet_balance do |object|
-    object.wallets.joins(:coin).in_order_of(:coin_id, Coin.pluck(:id)).pluck(:balance)
+    object.remaining_balance
   end
 
   attribute :user_profile do |object|
