@@ -2,7 +2,7 @@ module Api
   module V1
     class UserCarnivalGiftsController < MobileController
       def index
-        user_carnival_gifts = UserCarnivalGift::List.new.call(
+        user_carnival_gifts = UserCarnivalGiftService::List.new.call(
           query: query_object,
           pagination: pagination_object,
           order: order_object
@@ -13,7 +13,7 @@ module Api
       end
 
       def create
-        user_carnival_gift = UserCarnivalGift::Create.new(
+        user_carnival_gift = UserCarnivalGiftService::Create.new(
           params: user_carnival_gift_params,
           user: current_user
         ).call
