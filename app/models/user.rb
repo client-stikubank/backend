@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_one :user_profile, dependent: :destroy
   has_one :active_camp, -> { active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
 
-  has_many :refferals
+  has_many :refferals, dependent: :destroy
   has_many :user_stage_schedules, dependent: :destroy
   has_many :user_carnival_gifts, dependent: :destroy
   has_many :current_schedules, -> { current }, class_name: 'UserStageSchedule'
@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_many :wallets, dependent: :destroy
   has_many :rewards, through: :wallets
 
-  validate :check_reffering_code, on: :create, if: Proc.new { reffering_code.present? }
+  validate :check_reffering_code, on: :create, if: proc { reffering_code.present? }
 
   attr_accessor :generated_password, :role_types, :reffering_code, :student_information, :parent_information
 
@@ -27,17 +27,30 @@ class User < ApplicationRecord
 
   after_create :manage_roles
   after_create :build_wallets
-  after_create :build_refferal, if: Proc.new { reffering_code.present? }
+  after_create :build_refferal, if: proc { reffering_code.present? }
 
   after_commit :send_registration_mail, on: :create
 
+  def wallet_balance
+    wallets.pluck(:balance)
+  end
+
+  def remaining_balance
+    redeemed_gifts = user_carnival_gifts.redeemed
+    return wallet_balance if redeemed_gifts.size.zero?
+
+    [wallet_balance, redeemed_gifts.sum_gift_price].transpose.map do |balance|
+      balance.reduce(:-)
+    end
+  end
+
   def current_stage
     finished_schedules = current_schedules.finish
-    return 1 unless finished_schedules.present?
+    return 1 if finished_schedules.blank?
 
     stage = finished_schedules.includes(:stage).order('stages.level DESC').first.stage
 
-    (stage&.level || 0)  + 1
+    (stage&.level || 0) + 1
   end
 
   def role
@@ -89,15 +102,15 @@ class User < ApplicationRecord
   end
 
   def check_reffering_code
-    reffering = User.find_by_refferal_code(reffering_code)
+    reffering = User.find_by(refferal_code: reffering_code)
 
-    errors.add(:base, I18n.t('errors.messages.invalid_reffering_code')) unless reffering.present?
+    errors.add(:base, I18n.t('errors.messages.invalid_reffering_code')) if reffering.blank?
   end
 
   def build_refferal
-    reffering = User.find_by_refferal_code(reffering_code)
+    reffering = User.find_by(refferal_code: reffering_code)
 
-    refferals.create(reffered_by_id:reffering.id ) if reffering.present?
+    refferals.create(reffered_by_id: reffering.id) if reffering.present?
   end
 
   def manage_roles

@@ -6,11 +6,11 @@ class UserCarnivalGiftSerializer
   end
 
   attribute :gift do |object|
-    object.carnival_gift.gift
+    object.gift
   end
 
   attribute :carnival do |object|
-    object.carnival_gift.carnival
+    object.carnival
   end
 
   attribute :status

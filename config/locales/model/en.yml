@@ -22,3 +22,6 @@ en:
       has_active_camp: Has active schedule, please finish it first!
       more_than_joined_count: 'Quota should more that %{count}'
       stock_balance_not_enough: Stock balance not available to reduce
+      more_than_redeemend_gifts: 'Quantity should more that %{count}'
+      insufficient_balance: Insufficient wallet balance
+      gift_issue: Gift is out of stock
