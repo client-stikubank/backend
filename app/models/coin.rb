@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Coin < ApplicationRecord
-  default_scope { ordered }
+  default_scope { order(name: :asc) }
 
   mount_uploader :image, ImageUploader
 
@@ -9,8 +9,6 @@ class Coin < ApplicationRecord
 
   has_one :stock, dependent: :destroy
   has_many :wallets, dependent: :destroy
-
-  scope :ordered, -> { in_order_of(:name, %i[beryl ale jenny mamo]) }
 
   validates :name, presence: true, uniqueness: true
   validates :max_supply, presence: true, numericality: { greater_than_or_equal_to: 0 }

@@ -6,7 +6,7 @@ class Reward < ApplicationRecord
   include AASM
 
   enum reward_type: { join_camp: 0 }
-  enum status: { pending: 'pending', processed: 'processed', completed: 'completed'}
+  enum status: { pending: 'pending', processed: 'processed', completed: 'completed' }
 
   belongs_to :from, class_name: 'Stock'
   belongs_to :to, class_name: 'Wallet'
@@ -24,8 +24,8 @@ class Reward < ApplicationRecord
 
   def process_transaction
     return unless stock_available?
-    self.processed!
 
+    processed!
     RewardTransactionWorker.perform_async(id)
   end
 end

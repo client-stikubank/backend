@@ -8,7 +8,7 @@ class RewardSerializer
   end
 
   attribute :activitable do |object|
-    if object.reward_type === 'join_camp'
+    if object.reward_type == 'join_camp'
       UserStageScheduleSerializer.new(object.activitable).serializable_hash
     else
       object.activitable
