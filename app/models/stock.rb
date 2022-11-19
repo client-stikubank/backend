@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class Stock < ApplicationRecord
-  default_scope { joins(:coin).order('coins.max_supply ASC') }
+  default_scope { ordered }
 
   belongs_to :coin
   has_many :transactions, as: :transactable
+
+  scope :ordered, -> { includes(:coin).order('coins.name ASC') }
 
   validate :validate_balance!
 
