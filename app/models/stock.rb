@@ -6,7 +6,7 @@ class Stock < ApplicationRecord
   belongs_to :coin
   has_many :transactions, as: :transactable
 
-  scope :ordered, -> { includes(:coin).order('coins.name ASC') }
+  scope :ordered, -> { joins(:coin).order('coins.name ASC') }
 
   validate :validate_balance!
 
