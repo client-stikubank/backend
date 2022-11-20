@@ -7,7 +7,7 @@ class CarnivalGift < ApplicationRecord
   belongs_to :gift
 
   has_many :user_carnival_gifts, dependent: :destroy
-  has_many :redeemed_gifts, -> { redeemed.paid }, class_name: 'UserCarnivalGift'
+  has_many :redeemed_gifts, -> { where(status: [0, 1]) }, class_name: 'UserCarnivalGift'
   has_many :cancelled_gifts, -> { cancelled }, class_name: 'UserCarnivalGift'
 
   validate :check_redeemed_gifts
