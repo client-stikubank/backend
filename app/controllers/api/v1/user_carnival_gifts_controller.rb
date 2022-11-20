@@ -5,10 +5,11 @@ module Api
         user_carnival_gifts = UserCarnivalGiftService::List.new.call(
           query: query_object,
           pagination: pagination_object,
-          order: order_object
+          order: order_object,
+          record: current_user.user_carnival_gifts
         )
 
-        @user_carnival_gifts = current_user.user_carnival_gifts.order('created_at DESC')
+        @user_carnival_gifts = user_carnival_gifts.success
         serialize!('UserCarnivalGift', @user_carnival_gifts, paginate(@user_carnival_gifts))
       end
 
