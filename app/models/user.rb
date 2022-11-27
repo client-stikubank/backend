@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :stage_camp_schedules, through: :user_stage_schedules
   has_many :wallets, dependent: :destroy
   has_many :rewards, through: :wallets
+  has_many :assessment, dependent: :destroy
 
   validate :check_reffering_code, on: :create, if: proc { reffering_code.present? }
 

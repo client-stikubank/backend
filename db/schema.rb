@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_05_152149) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_27_061912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -34,9 +34,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_152149) do
     t.string "choice_2_text"
     t.string "choice_1_image"
     t.string "choice_2_image"
-    t.integer "choice_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "choice_1_type"
+    t.string "choice_2_type"
+    t.integer "status", default: 0
   end
 
   create_table "assessments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -45,7 +47,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_152149) do
     t.uuid "programmable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.datetime "completed_at"
     t.index ["programmable_type", "programmable_id"], name: "index_assessments_on_programmable"
+    t.index ["user_id"], name: "index_assessments_on_user_id"
   end
 
   create_table "camps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -371,6 +376,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_152149) do
   add_foreign_key "assessment_answers", "assessment_questions"
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
+  add_foreign_key "assessments", "users"
   add_foreign_key "camps", "users", column: "speaker_id"
   add_foreign_key "carnival_gifts", "carnivals"
   add_foreign_key "carnival_gifts", "gifts"
