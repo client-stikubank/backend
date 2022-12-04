@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AssessmentController < MobileController
+    class AssessmentsController < MobileController
       before_action :set_assessment, only: :update
 
       def index

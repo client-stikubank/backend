@@ -62,6 +62,7 @@ Rails.application.routes.draw do
         resources :carnival_gifts, only: %i[index show]
         resources :rewards, only: :index
         resources :user_carnival_gifts, only: %i[index create update]
+        resources :assessments, only: %i[index create]
 
         get :display_profile, path: '/display_profile', to: 'user_profiles#display_profile'
         put :update_profile, path: '/update_profile', to: 'user_profiles#update_profile'
