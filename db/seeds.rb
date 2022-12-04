@@ -66,3 +66,47 @@ Coin.names.to_a.each do |name|
   coin = Coin.find_or_initialize_by(name: name[0])
   coin.save!
 end
+
+# 5.times do |i|
+#   AssessmentQuestion.create(
+#     question: "Pertanyaan #{i + 1} (I & E)",
+#     choice_1_text: 'Pilihan 1 (I)',
+#     choice_1_type: 'introvert',
+#     choice_2_text: 'Pilihan 2 (E)',
+#     choice_2_type: 'extrovert',
+#     status: 'active'
+#   )
+# end
+
+# 5.times do |i|
+#   AssessmentQuestion.create(
+#     question: "Pertanyaan #{i + 1} (S & N)",
+#     choice_1_text: 'Pilihan 1 (S)',
+#     choice_1_type: 'sensing',
+#     choice_2_text: 'Pilihan 2 (N)',
+#     choice_2_type: 'intuition',
+#     status: 'active'
+#   )
+# end
+
+# 5.times do |i|
+#   AssessmentQuestion.create(
+#     question: "Pertanyaan #{i + 1} (T & F)",
+#     choice_1_text: 'Pilihan 1 (T)',
+#     choice_1_type: 'thinking',
+#     choice_2_text: 'Pilihan 2 (F)',
+#     choice_2_type: 'feeling',
+#     status: 'active'
+#   )
+# end
+
+# 5.times do |i|
+#   AssessmentQuestion.create(
+#     question: "Pertanyaan #{i + 1} (J & P)",
+#     choice_1_text: 'Pilihan 1 (J)',
+#     choice_1_type: 'judging',
+#     choice_2_text: 'Pilihan 2 (P)',
+#     choice_2_type: 'perceiving',
+#     status: 'active'
+#   )
+# end

@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :stage_camp_schedules, through: :user_stage_schedules
   has_many :wallets, dependent: :destroy
   has_many :rewards, through: :wallets
-  has_many :assessment, dependent: :destroy
+  has_many :assessments, dependent: :destroy
 
   validate :check_reffering_code, on: :create, if: proc { reffering_code.present? }
 
@@ -23,8 +23,8 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :user_profile
 
-  before_save :set_generated_password
-  before_save :set_refferal_code
+  before_save :set_generated_password, if: :new_record?
+  before_save :set_refferal_code, if: :new_record?
 
   after_create :manage_roles
   after_create :build_wallets

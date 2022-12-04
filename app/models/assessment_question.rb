@@ -8,11 +8,12 @@ class AssessmentQuestion < ApplicationRecord
     introvert: 'introvert', extrovert: 'extrovert', sensing: 'sensing',
     intuition: 'intuition', thinking: 'thinking', feeling: 'feeling',
     judging: 'judging', perceiving: 'perceiving'
-  }, _prefix: :choice_1
+  }, _prefix: :first_choice
   enum choice_2_type: {
     introvert: 'introvert', extrovert: 'extrovert', sensing: 'sensing',
     intuition: 'intuition', thinking: 'thinking', feeling: 'feeling',
     judging: 'judging', perceiving: 'perceiving'
-  }, _prefix: :choice_2
+  }, _prefix: :second_choice
+
   enum status: { inactive: 0, active: 1 }
 end

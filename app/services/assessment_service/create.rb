@@ -8,8 +8,9 @@ class AssessmentService::Create
 
   attr_reader :params
 
-  def initialize(params:)
+  def initialize(params:, user:)
     @params = params
+    @user = user
   end
 
   def call
@@ -21,7 +22,7 @@ class AssessmentService::Create
   private
 
   def call_create_record
-    record = Assessment.new(params)
+    record = user ? user.assessments.new(programmable_id: params[:programmable_id], programmable_type: 'Carnival') : Assessment.new(params)
 
     if record.save
       Success(record)
