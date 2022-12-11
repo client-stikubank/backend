@@ -55,6 +55,10 @@ class User < ApplicationRecord
     (stage&.level || 0) + 1
   end
 
+  def current_assessment_index
+    pending_assessment.assessment_answers.unanswered.first.index_order
+  end
+
   def role
     roles.first.name.titleize
   end

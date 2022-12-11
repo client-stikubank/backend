@@ -1,7 +1,7 @@
 class ActiveCarnivalSerializer
   include JSONAPI::Serializer
 
-  attributes :current_stage
+  attributes :current_stage, :current_assessment_index
 
   attribute :carnival do |_object|
     CarnivalDetailSerializer.new(Carnival.active).serializable_hash
