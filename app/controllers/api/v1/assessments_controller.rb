@@ -32,7 +32,7 @@ module Api
       private
 
       def assessment_params
-        params.require(:assessment).permit(:programmable_id, :status, :completed_at)
+        params.require(:assessment).permit(:programmable_id, :status, :completed_at, assessment_answers_attributes: [:index_order, :assessment_question_id, :user_id])
       end
 
       def set_assessment
