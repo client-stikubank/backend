@@ -7,8 +7,8 @@ class AssessmentService::List
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  def call(pagination: nil, query: nil, order: nil)
-    records = Assessment.order(order ? order_query(Assessment, order) : 'created_at DESC')
+  def call(pagination: nil, query: nil, order: nil, record: Assessment.all)
+    records = record.order(order ? order_query(record, order) : 'created_at DESC')
     Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
   end
 end
