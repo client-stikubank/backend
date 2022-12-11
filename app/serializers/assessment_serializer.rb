@@ -8,6 +8,6 @@ class AssessmentSerializer
   end
 
   attribute :user do |object|
-    object.user
+    UserSerializer.new(object.user).serializable_hash
   end
 end
