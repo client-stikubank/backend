@@ -6,7 +6,7 @@ class AssessmentService::Create
   include Dry::Monads[:result]
   include Dry::Monads::Do.for(:call)
 
-  attr_reader :params
+  attr_reader :params, :user
 
   def initialize(params:, user:)
     @params = params
