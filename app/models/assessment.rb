@@ -10,6 +10,8 @@ class Assessment < ApplicationRecord
 
   before_save :set_assessment_answers, if: :new_record?
 
+  validate
+
   def set_assessment_answers
     AssessmentQuestion.active.order('RANDOM()').each_with_index do |question, index|
       assessment_answers.build(

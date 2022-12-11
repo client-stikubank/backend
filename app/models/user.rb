@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_one :refferal, class_name: 'Refferal', foreign_key: :reffered_by_id
   has_one :user_profile, dependent: :destroy
   has_one :active_camp, -> { active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
+  has_one :pending_assessment, -> { pending.order(created_at: :desc) }, class_name: 'Assessment'
 
   has_many :refferals, dependent: :destroy
   has_many :user_stage_schedules, dependent: :destroy

@@ -10,4 +10,8 @@ class ActiveCarnivalSerializer
   attribute :active_camp do |object|
     UserStageScheduleSerializer.new(object.active_camp).serializable_hash
   end
+
+  attribute :pending_assessment do |object|
+    AssessmentSerializer.new(object.pending_assessment).serializable_hash
+  end
 end
