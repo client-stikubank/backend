@@ -22,7 +22,8 @@ class AssessmentService::Create
   private
 
   def call_create_record
-    record = user ? user.assessments.new(programmable_id: params[:programmable_id], programmable_type: 'Carnival') : Assessment.new(params)
+    carnival = Carnival.find(params[:programmable_id])
+    record = user ? user.assessments.new(programmable: carnival) : Assessment.new(params)
 
     if record.save
       Success(record)
