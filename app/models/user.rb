@@ -56,6 +56,8 @@ class User < ApplicationRecord
   end
 
   def current_assessment_index
+    return 0 if pending_assessment.blank?
+
     pending_assessment.assessment_answers.unanswered.first.index_order
   end
 
