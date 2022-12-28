@@ -67,6 +67,12 @@ Coin.names.to_a.each do |name|
   coin.save!
 end
 
+PERSONALITIES = %w[ESTJ ENTJ ESFJ ENFJ ISTJ ISFJ INTJ INFJ ESTP ESFP ENTP ENFP ISTP ISFP INTP INFP].freeze
+
+PERSONALITIES.each do |personality|
+  Personality.create(code: personality, name: personality)
+end
+
 # 5.times do |i|
 #   AssessmentQuestion.create(
 #     question: "Pertanyaan #{i + 1} (I & E)",

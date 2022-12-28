@@ -10,4 +10,8 @@ class AssessmentSerializer
   attribute :user do |object|
     UserSerializer.new(object.user).serializable_hash
   end
+
+  attribute :personality do |object|
+    PersonalitySerializer.new(object.personality).serializable_hash
+  end
 end
