@@ -19,4 +19,14 @@ class Assessment < ApplicationRecord
       )
     end
   end
+
+  def choice_types_map
+    return [] if assessment.pending?
+
+    types = assessment_answers.includes(:assessment_question).map do |answer|
+      answer.one? ? answer.assessment_question.choice_1_type : answer.assessment_question.choice_2_type
+    end
+
+    types.group_by { |a| a }.map { |key, values| Hash["#{key}": values.size] }.reduce(:merge)
+  end
 end

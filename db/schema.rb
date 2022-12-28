@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_061912) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_28_070722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -49,6 +49,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_061912) do
     t.datetime "updated_at", null: false
     t.uuid "user_id"
     t.datetime "completed_at"
+    t.jsonb "results"
+    t.uuid "personality_id"
+    t.index ["personality_id"], name: "index_assessments_on_personality_id"
     t.index ["programmable_type", "programmable_id"], name: "index_assessments_on_programmable"
     t.index ["user_id"], name: "index_assessments_on_user_id"
   end
@@ -161,6 +164,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_061912) do
     t.text "description"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "personalities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.string "image"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_personalities_on_name", unique: true
   end
 
   create_table "provinces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -376,6 +389,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_061912) do
   add_foreign_key "assessment_answers", "assessment_questions"
   add_foreign_key "assessment_answers", "assessments"
   add_foreign_key "assessment_answers", "users"
+  add_foreign_key "assessments", "personalities"
   add_foreign_key "assessments", "users"
   add_foreign_key "camps", "users", column: "speaker_id"
   add_foreign_key "carnival_gifts", "carnivals"

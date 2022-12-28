@@ -48,6 +48,7 @@ Rails.application.routes.draw do
           post :process_transaction
         end
       end
+      resources :personalities, except: %i[destroy]
       post '/login', to: 'login#create'
 
       put :update_password, path: '/:id/update_password', to: 'users#update_password'
