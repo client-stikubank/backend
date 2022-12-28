@@ -58,7 +58,10 @@ class User < ApplicationRecord
   def current_assessment_index
     return 0 if pending_assessment.blank?
 
-    pending_assessment.assessment_answers.unanswered.first.index_order
+    assessment_answers = pending_assessment.assessment_answers
+    return assessment_answers.size + 1 if assessment_answers.unanswered.blank? # Generate Results Index
+
+    assessment_answers.unanswered.first.index_order
   end
 
   def role
