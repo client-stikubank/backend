@@ -12,8 +12,8 @@ class Assessment < ApplicationRecord
   before_save :set_assessment_answers, if: :new_record?
   before_update :set_results, if: :status_changed?
 
-  def choice_types_map
-    return [] if assessment.pending?
+  def choice_types
+    return if status == 'pending'
 
     types = assessment_answers.includes(:assessment_question).map do |answer|
       answer.one? ? answer.assessment_question.choice_1_type : answer.assessment_question.choice_2_type
@@ -34,7 +34,10 @@ class Assessment < ApplicationRecord
 
   def set_results
     code = []
-    results = choice_types_map
+    results = choice_types
+
+    return if results.blank?
+
     code << results[:introvert].to_i > results[:extrovert].to_i ? 'I' : 'E'
     code << results[:sensing].to_i > results[:intuition].to_i ? 'S' : 'N'
     code << results[:thinking].to_i > results[:feeling].to_i ? 'T' : 'F'
