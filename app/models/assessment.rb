@@ -38,10 +38,10 @@ class Assessment < ApplicationRecord
 
     return if results.blank?
 
-    code << (results[:introvert].to_i > results[:extrovert].to_i) ? 'I' : 'E'
-    code << (results[:sensing].to_i > results[:intuition].to_i) ? 'S' : 'N'
-    code << (results[:thinking].to_i > results[:feeling].to_i) ? 'T' : 'F'
-    code << (results[:judging].to_i > results[:perceiving].to_i) ? 'J' : 'P'
+    code << (results[:introvert].to_i > results[:extrovert].to_i ? 'I' : 'E')
+    code << (results[:sensing].to_i > results[:intuition].to_i ? 'S' : 'N')
+    code << (results[:thinking].to_i > results[:feeling].to_i ? 'T' : 'F')
+    code << (results[:judging].to_i > results[:perceiving].to_i ? 'J' : 'P')
 
     self.results = results.to_json
     self.personality = Personality.find_by(code: code.join(''))
