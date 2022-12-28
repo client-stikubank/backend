@@ -5,7 +5,7 @@ class Assessment < ApplicationRecord
 
   belongs_to :programmable, polymorphic: true
   belongs_to :user
-  belongs_to :personality
+  belongs_to :personality, optional: true
 
   has_many :assessment_answers, dependent: :destroy
 
