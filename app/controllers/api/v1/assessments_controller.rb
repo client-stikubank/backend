@@ -36,7 +36,7 @@ module Api
       end
 
       def set_assessment
-        @assessment = Assessment.find(params[:assessment_id])
+        @assessment = Assessment.find(params[:id])
       end
     end
   end
