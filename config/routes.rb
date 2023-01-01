@@ -49,8 +49,9 @@ Rails.application.routes.draw do
         end
       end
       resources :personalities, except: %i[destroy]
-      post '/login', to: 'login#create'
+      resources :assessments, only: %i[index]
 
+      post '/login', to: 'login#create'
       put :update_password, path: '/:id/update_password', to: 'users#update_password'
     end
     namespace :api do
