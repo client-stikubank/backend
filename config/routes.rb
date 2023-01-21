@@ -75,5 +75,10 @@ Rails.application.routes.draw do
         post '/active_camp/claim', to: 'carnivals#claim_active_camp'
       end
     end
+
+    namespace :password do
+      post :reset, to: 'reset#create'
+      put :reset, to: 'reset#update'
+    end
   end
 end
