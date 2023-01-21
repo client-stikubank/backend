@@ -15,17 +15,18 @@ class ApplicationMailer < ActionMailer::Base
   def reset_password_instructions(user)
     create_reset_password_token(user)
 
-    mail(to: user.email, subject: 'Rest Password Instruction!')
+    mail(to: user.email, subject: 'Youthcamp: Reset Kode - Lupa Kata Sandi')
   end
 
   private
 
   def create_reset_password_token(user)
-    raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
-    @token      = raw
+    # raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
+    # @token      = raw
 
-    user.reset_password_token   = hashed
-    user.reset_password_sent_at = Time.now.utc
+    # user.reset_password_token   = hashed
+    user.reset_password_sent_at = Time.zone.now
+    user.reset_code = SecureRandom.alphanumeric(6).upcase
     user.save
   end
 end

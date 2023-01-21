@@ -33,6 +33,10 @@ class User < ApplicationRecord
 
   after_commit :send_registration_mail, on: :create
 
+  def nickname
+    user_profile.first_name
+  end
+
   def wallet_balance
     wallets.pluck(:balance)
   end
