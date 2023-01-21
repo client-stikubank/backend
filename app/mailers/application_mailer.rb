@@ -12,10 +12,12 @@ class ApplicationMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Registration Success')
   end
 
-  def reset_password_instructions(user)
-    create_reset_password_token(user)
+  def reset_password_instructions(user_id)
+    @user = User.find(user_id)
 
-    mail(to: user.email, subject: 'Youthcamp: Reset Code - Lupa Kata Sandi')
+    create_reset_password_token(@user)
+
+    mail(to: @user.email, subject: 'Youthcamp: Reset Code - Lupa Kata Sandi')
   end
 
   private
