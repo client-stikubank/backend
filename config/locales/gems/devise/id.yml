@@ -75,7 +75,7 @@ id:
         instruction: Seseorang telah meminta tautan untuk mengganti password Anda, dan Anda bisa melakukannya menggunakan tautan berikut ini.
         instruction_2: Jika Anda tidak meminta hal ini, abaikan saja email ini.
         instruction_3: Password Anda tidak akan berubah jika Anda tidak mengakses tautan di atas lalu membuat password yang baru.
-        subject: Instruksi untuk melakukan Reset password
+        subject: 'Youthcamp: Reset Kode - Lupa Kata Sandi'
       unlock_instructions:
         action: Buka kunci akun saya
         greeting: Halo %{recipient}!

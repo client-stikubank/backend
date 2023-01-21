@@ -3,7 +3,7 @@
 module Users
   class PasswordsController < Devise::PasswordsController
     def create
-      self.resource = resource_class.send_reset_password_instructions(password_params)
+      self.resource = resource_class.reset_password_instructions(password_params)
       yield resource if block_given?
 
       return render json: { message: I18n.t('devise.passwords.send_instructions') }, status: :ok if successfully_sent?(resource)

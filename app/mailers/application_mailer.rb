@@ -15,7 +15,7 @@ class ApplicationMailer < ActionMailer::Base
   def reset_password_instructions(user)
     create_reset_password_token(user)
 
-    mail(to: user.email, subject: 'Youthcamp: Reset Kode - Lupa Kata Sandi')
+    mail(to: user.email, subject: 'Youthcamp: Reset Code - Lupa Kata Sandi')
   end
 
   private
