@@ -3,12 +3,14 @@
 module Users
   class PasswordsController < Devise::PasswordsController
     def create
+      puts params
+      puts params
       user = User.find_by(email: params[:email])
+
+      return render json: { errors: resource.errors }, status: :unprocessable_entity if user.blank?
+
       SendResetPasswordWorker.perform_async(user.id)
-
-      return render json: { message: I18n.t('devise.passwords.send_instructions') }, status: :ok if user.present?
-
-      render json: { errors: resource.errors }, status: :unprocessable_entity
+      render json: { message: I18n.t('devise.passwords.send_instructions') }, status: :ok
     end
 
     def update
