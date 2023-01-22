@@ -8,7 +8,7 @@ module Api
           query: query_object,
           pagination: pagination_object,
           order: order_object,
-          record: current_user.user_carnival_gifts
+          record: current_user.user_carnival_gifts.not_cancelled
         )
 
         @user_carnival_gifts = user_carnival_gifts.success
@@ -36,7 +36,7 @@ module Api
       end
 
       def set_user_carnival_gift
-        @user_carnival_gift = UserCarnivalGift.find(params[:user_carnival_gift_id])
+        @user_carnival_gift = UserCarnivalGift.find(params[:id])
       end
     end
   end

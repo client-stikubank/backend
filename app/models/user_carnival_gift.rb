@@ -15,7 +15,7 @@ class UserCarnivalGift < ApplicationRecord
 
   class << self
     def sum_gift_price
-      prices = includes(:gift).all.map { |user_carnival_gift| user_carnival_gift.gift.reward_amount }
+      prices = includes(:gift).redeemed.map { |user_carnival_gift| user_carnival_gift.gift.reward_amount }
       prices.transpose.map(&:sum)
     end
   end
