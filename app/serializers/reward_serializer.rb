@@ -8,8 +8,11 @@ class RewardSerializer
   end
 
   attribute :activitable do |object|
-    if object.reward_type == 'join_camp'
+    case object.reward_type
+    when 'join_camp'
       UserStageScheduleSerializer.new(object.activitable).serializable_hash
+    when 'refferal'
+      RefferalSerializer.new(object.activitable).serializable_hash
     else
       object.activitable
     end
