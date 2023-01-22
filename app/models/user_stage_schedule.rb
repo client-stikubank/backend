@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserStageSchedule < ApplicationRecord
-  ACTIVE_STATUSES = [:pending, :confirmed]
+  ACTIVE_STATUSES = %i[pending confirmed].freeze
 
   enum status: { pending: 0, confirmed: 1, finish: 2, rejected: 3, absent: 4 }
 

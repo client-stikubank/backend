@@ -10,6 +10,10 @@ class Stock < ApplicationRecord
 
   validate :validate_balance!
 
+  def self.mamo
+    find_by(coin: Coin.mamo.first)
+  end
+
   private
 
   def validate_balance!
