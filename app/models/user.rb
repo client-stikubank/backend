@@ -28,7 +28,7 @@ class User < ApplicationRecord
 
   after_create :manage_roles
   after_create :build_wallets
-  after_create :build_refferal, if: proc { reffering_code.present? }
+  after_create :build_refferal, if: :reffering_code
 
   after_commit :send_registration_mail, on: :create
 
@@ -148,6 +148,11 @@ class User < ApplicationRecord
   end
 
   def set_refferal_code
-    self.refferal_code = SecureRandom.hex[0, 8].upcase
+    loop do
+      code = SecureRandom.alphanumeric(8).upcase
+      self.refferal_code = code
+
+      break if User.find_by(refferal_code: code).blank?
+    end
   end
 end
