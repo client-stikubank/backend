@@ -129,7 +129,7 @@ id:
       other_than: harus selain %{count}
       present: harus kosong
       required: harus ada
-      taken: sudah digunakan
+      taken: '%{attribute} sudah digunakan'
       too_long:
         one: terlalu panjang (maksimum 1 karakter)
         other: terlalu panjang (maksimum %{count} karakter)
