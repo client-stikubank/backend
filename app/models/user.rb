@@ -124,7 +124,7 @@ class User < ApplicationRecord
   def build_refferal
     reffering = User.find_by(refferal_code: reffering_code)
 
-    refferals.create(reffered_by_id: reffering.id) if reffering.present?
+    Refferal.create(user: self, reffered_by_id: reffering.id) if reffering.present?
   end
 
   def manage_roles
