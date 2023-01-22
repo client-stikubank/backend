@@ -134,6 +134,8 @@ class User < ApplicationRecord
   end
 
   def send_registration_mail
+    return unless admin_user?
+
     SendRegistrationMailWorker.perform_async(id, generated_password)
   end
 
