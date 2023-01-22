@@ -3,10 +3,6 @@ class UserSerializer
 
   attributes :email, :refferal_code
 
-  attribute :reffered_by do |object|
-    object.refferal.user.user_profile.full_name if object.refferal.present?
-  end
-
   attribute :role do |object|
     object.role
   end
