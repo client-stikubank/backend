@@ -9,10 +9,10 @@ class RedeemTransactionWorker
       ActiveRecord::Base.transaction do
         Transaction.sender.create!(sourceable: redeem, transactable: redeem.from)
         Transaction.receiver.create!(sourceable: redeem, transactable: redeem.to)
-        reward.completed!
+        redeem.completed!
       end
     rescue ActiveRecord::RecordInvalid
-      reward.pending!
+      redeem.pending!
     end
   end
 end
