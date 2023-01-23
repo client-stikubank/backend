@@ -13,6 +13,8 @@ class UserCarnivalGift < ApplicationRecord
 
   validate :redeem_validation, on: :create
 
+  after_update :check_paid_gift
+
   class << self
     def sum_gift_price
       prices = includes(:gift).redeemed.map { |user_carnival_gift| user_carnival_gift.gift.reward_amount }
@@ -21,6 +23,26 @@ class UserCarnivalGift < ApplicationRecord
   end
 
   private
+
+  def check_paid_gift
+    return unless saved_change_to_status? && status == 'paid'
+
+    Coin.all.each_with_index do |coin, index|
+      next if gift.reward_amount[index].zero?
+
+      stock = Stock.find_by(coin:)
+      wallet = user.wallets.find_by(coin:)
+
+      Redeem.create!(
+        amount: gift.reward_amount[index],
+        coin:,
+        redeem_type: :gift,
+        kindable: self,
+        from: wallet,
+        to: stock
+      )
+    end
+  end
 
   def redeem_validation
     errors.add(:base, I18n.t('errors.messages.gift_issue')) unless carnival_gift.redeem_available?
