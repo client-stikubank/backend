@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_064411) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "duration"
+    t.string "duration"
     t.datetime "event_at"
     t.index ["city_id"], name: "index_events_on_city_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
