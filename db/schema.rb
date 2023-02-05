@@ -108,16 +108,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_044601) do
   end
 
   create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "city_id"
     t.string "title"
     t.string "image"
     t.text "description"
     t.integer "reward_amount", default: [0, 0, 0, 0], array: true
     t.datetime "start_date"
     t.datetime "end_date"
+    t.string "address"
+    t.string "map_link"
     t.integer "status", default: 0, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["city_id"], name: "index_events_on_city_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
     t.index ["title", "deleted_at"], name: "index_events_on_title_and_deleted_at", unique: true
   end
@@ -421,6 +425,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_044601) do
   add_foreign_key "carnival_gifts", "carnivals"
   add_foreign_key "carnival_gifts", "gifts"
   add_foreign_key "cities", "provinces"
+  add_foreign_key "events", "cities"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "parent_informations", "user_profiles"
   add_foreign_key "redeems", "coins"

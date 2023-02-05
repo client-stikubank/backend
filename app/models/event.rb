@@ -5,6 +5,8 @@ class Event < ApplicationRecord
 
   enum status: { inactive: 0, active: 1 }
 
+  belongs_to :city
+
   has_many :user_events, dependent: :destroy
   has_many :sold_events, -> { where(status: [1, 2]) }, class_name: 'UserEvent'
 
