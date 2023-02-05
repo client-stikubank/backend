@@ -40,7 +40,7 @@ module Admin
     private
 
     def event_params
-      params.require(:event).permit(:name, :image, :status, :city_id, :address, :map_link, :start_date, :end_date, :description, reward_amount: [])
+      params.require(:event).permit(:name, :image, :status, :city_id, :address, :map_link, :start_date, :end_date, :description, :duration, :event_at, reward_amount: [])
     end
 
     def set_event
