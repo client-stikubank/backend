@@ -9,8 +9,6 @@ class UserCarnivalGift < ApplicationRecord
   has_one :gift, through: :carnival_gift
   has_one :carnival, through: :carnival_gift
 
-  has_many :user_carnival_gifts, dependent: :destroy
-
   validate :redeem_validation, on: :create
 
   after_update :check_paid_gift

@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       end
       resources :personalities, except: %i[destroy]
       resources :assessments, only: %i[index]
+      resources :events
+      resources :user_events
 
       post '/login', to: 'login#create'
       put :update_password, path: '/:id/update_password', to: 'users#update_password'

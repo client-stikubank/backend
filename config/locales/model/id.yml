@@ -26,3 +26,4 @@ id:
       more_than_redeemend_gifts: 'Stok harus lebih dari %{count}'
       insufficient_balance: MONSTA Anda tidak mencukupi!
       gift_issue: Maaf, Kado telah habis!
+      event_stock_validation: Maaf, Tiket sudah tidak tersedia!

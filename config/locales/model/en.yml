@@ -25,3 +25,4 @@ en:
       more_than_redeemend_gifts: 'Quantity should more that %{count}'
       insufficient_balance: Insufficient wallet balance
       gift_issue: Gift is out of stock
+      event_stock_validation: Event is out of stock
