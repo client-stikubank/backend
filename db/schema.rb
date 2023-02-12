@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_05_064411) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_12_130245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -138,6 +138,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_064411) do
     t.integer "reward_amount", default: [0, 0, 0, 0], array: true
     t.index ["deleted_at"], name: "index_gifts_on_deleted_at"
     t.index ["name", "deleted_at"], name: "index_gifts_on_name_and_deleted_at", unique: true
+  end
+
+  create_table "global_settings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.text "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_global_settings_on_code", unique: true
   end
 
   create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -277,6 +286,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_064411) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0, null: false
     t.string "link"
+    t.integer "learning_type", default: 0
     t.index ["stage_camp_id"], name: "index_stage_camp_schedules_on_stage_camp_id"
   end
 
