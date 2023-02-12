@@ -60,7 +60,6 @@ default_admin.build_user_profile(first_name: 'Super', last_name: 'Admin', birth_
 carnival = Carnival.find_or_initialize_by(name: 'Youthcamp - Season 1')
 carnival.finished_at = carnival.finished_at || Time.zone.now + 6.month
 carnival.save!
-carnival.assessments.create! unless carnival.assessments.exists?
 
 Coin.names.to_a.each do |name|
   coin = Coin.find_or_initialize_by(name: name[0])
