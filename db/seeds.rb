@@ -59,6 +59,7 @@ default_admin.build_user_profile(first_name: 'Super', last_name: 'Admin', birth_
 # generate default carnival
 carnival = Carnival.find_or_initialize_by(name: 'Youthcamp - Season 1')
 carnival.finished_at = carnival.finished_at || Time.zone.now + 6.month
+carnival.status = 'active'
 carnival.save!
 
 Coin.names.to_a.each do |name|
@@ -69,7 +70,12 @@ end
 PERSONALITIES = %w[ESTJ ENTJ ESFJ ENFJ ISTJ ISFJ INTJ INFJ ESTP ESFP ENTP ENFP ISTP ISFP INTP INFP].freeze
 
 PERSONALITIES.each do |personality|
-  Personality.create(code: personality, name: personality)
+  pl = Personality.find_or_initialize_by(code: personality)
+  pl.name = personality
+  File.open("public/personalities/#{personality.downcase}_char.png") do |f|
+    pl.image = f
+  end
+  pl.save!
 end
 
 # J & P

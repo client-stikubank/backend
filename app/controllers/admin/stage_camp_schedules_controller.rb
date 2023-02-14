@@ -35,7 +35,7 @@ module Admin
     private
 
     def stage_camp_schedule_params
-      params.require(:stage_camp_schedule).permit(:stage_camp_id, :started_at, :time_start, :time_end, :quota, :link)
+      params.require(:stage_camp_schedule).permit(:stage_camp_id, :started_at, :time_start, :time_end, :quota, :link, :learning_type)
     end
 
     def set_stage_camp_schedule

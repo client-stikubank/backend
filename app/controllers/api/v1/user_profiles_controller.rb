@@ -12,7 +12,7 @@ module Api
       end
 
       def display_profile
-        @user_profile ? serialize!('User', current_user) : error!(I18n.t('c.errors.data_not_found'))
+        @user_profile ? serialize!(User, current_user) : error!(I18n.t('c.errors.data_not_found'))
       end
 
       private

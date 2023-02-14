@@ -8,7 +8,7 @@ module Api
           query: query_object,
           pagination: pagination_object,
           order: order_object,
-          record: current_user.assessments
+          record: Assessment.completed.where.not(user_id: current_user.id).limit(20)
         )
 
         @assessments = assessments.success

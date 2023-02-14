@@ -4,6 +4,7 @@ class StageCampSchedule < ApplicationRecord
   ACTIVE_STATUSES = [:pending, :reminded, :claim_time].freeze
 
   enum status: { pending: 0, reminded: 1, claim_time: 2, completed: 3, closed: 4 }
+  enum learning_type: { offline: 0, online: 1 }
 
   belongs_to :stage_camp
   has_many :user_stage_schedules, dependent: :destroy

@@ -6,7 +6,8 @@ class ClaimScheduleWorker
     schedule = StageCampSchedule.find(schedule_id)
     schedule.transaction do
       schedule.claim_time!
-      CompletedScheduleWorker.perform_in(Time.zone.now + 30.minutes, schedule_id)
+      expired_in = schedule.online? (Time.zone.now + 30.minutes) : Time.zone.now.end_of_day
+      CompletedScheduleWorker.perform_in(expired_in, schedule_id)
     end
   end
 end

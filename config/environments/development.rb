@@ -11,7 +11,7 @@ Rails.application.routes.default_url_options[:protocol] = URL_PROTOCOL
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.hosts << '.lvh.me'
+  config.hosts.clear
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

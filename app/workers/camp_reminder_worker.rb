@@ -24,9 +24,10 @@ class CampReminderWorker
         start_time = ((schedule.started_datetime - Time.zone.now) / 1.minute).round
         AbsentUserWorker.perform_in(start_time.minutes, schedule.id, phone_numbers)
 
-        messages = "Hallo Youthcampers,\nPelatihan kamu sebentar lagi akan dimulai nih.\nPastikan kamu hadir dan konfirmasi kehadiran di Youthcamp Apps ya!\n\n*Pelatihan:*\n#{schedule.stage_camp.stage.name} - Level #{schedule.stage_camp.stage.level}\n#{schedule.stage_camp.camp.title}\n#{I18n.l(schedule.started_at)}\n#{schedule.time_start} - #{schedule.time_end}\n\n*Link Pelatihan:*\n#{schedule.link}"
-        
-        SendWhatsappWorker.perform_async(phone_numbers, messages, 'broadcast')
+        if Rails.env.staging? || Rails.env.production?
+          messages = "Hallo Youthcampers,\nPelatihan kamu sebentar lagi akan dimulai nih.\nPastikan kamu hadir dan konfirmasi kehadiran di Youthcamp Apps ya!\n\n*Pelatihan:*\n#{schedule.stage_camp.stage.name} - Level #{schedule.stage_camp.stage.level}\n#{schedule.stage_camp.camp.title}\n#{I18n.l(schedule.started_at)}\n#{schedule.time_start} - #{schedule.time_end}\n\n*Link Pelatihan:*\n#{schedule.link}"
+          SendWhatsappWorker.perform_async(phone_numbers, messages, 'broadcast')
+        end
       end
     end
   end

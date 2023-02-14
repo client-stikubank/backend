@@ -7,15 +7,22 @@ class User < ApplicationRecord
   has_one :user_profile, dependent: :destroy
   has_one :active_camp, -> { active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
   has_one :pending_assessment, -> { pending.order(created_at: :desc) }, class_name: 'Assessment'
+  has_one :last_assessment, -> { completed.order(completed_at: :desc) }, class_name: 'Assessment'
 
   has_many :refferals, dependent: :destroy, foreign_key: 'reffered_by_id'
   has_many :user_stage_schedules, dependent: :destroy
   has_many :user_carnival_gifts, dependent: :destroy
   has_many :current_schedules, -> { current }, class_name: 'UserStageSchedule'
+  has_many :finished_schedules, -> { finish }, class_name: 'UserStageSchedule'
   has_many :stage_camp_schedules, through: :user_stage_schedules
   has_many :wallets, dependent: :destroy
   has_many :rewards, through: :wallets
   has_many :assessments, dependent: :destroy
+  has_many :camps, through: :user_stage_schedules do
+    def finished
+      where('user_stage_schedules.status = ?', 2).uniq
+    end
+  end
 
   validate :check_reffering_code, on: :create, if: proc { reffering_code.present? }
 

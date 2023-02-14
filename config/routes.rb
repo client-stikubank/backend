@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       resources :assessments, only: %i[index]
       resources :events
       resources :user_events
+      resources :global_settings
 
       post '/login', to: 'login#create'
       put :update_password, path: '/:id/update_password', to: 'users#update_password'
@@ -75,6 +76,7 @@ Rails.application.routes.draw do
         get '/active_carnival', to: 'carnivals#active_carnival'
         post '/active_camp/confirm', to: 'carnivals#confirm_active_camp'
         post '/active_camp/claim', to: 'carnivals#claim_active_camp'
+        get '/global_settings/:code', to: 'global_settings#show'
       end
     end
 

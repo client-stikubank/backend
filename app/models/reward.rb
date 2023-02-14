@@ -16,6 +16,7 @@ class Reward < ApplicationRecord
 
   validates :amount, presence: true
 
+  before_create :default_status
   after_commit :process_transaction, on: :create
 
   def stock_available?
@@ -27,5 +28,11 @@ class Reward < ApplicationRecord
 
     processed!
     RewardTransactionWorker.perform_async(id)
+  end
+
+  private
+  
+  def default_status
+    self.status = 'pending'
   end
 end
