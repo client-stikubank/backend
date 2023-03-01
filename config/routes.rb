@@ -74,8 +74,8 @@ Rails.application.routes.draw do
         put :update_profile, path: '/update_profile', to: 'user_profiles#update_profile'
         put :update_password, path: '/update_password', to: 'users#update_password'
         get '/active_carnival', to: 'carnivals#active_carnival'
-        post '/active_camp/confirm', to: 'carnivals#confirm_active_camp'
-        post '/active_camp/claim', to: 'carnivals#claim_active_camp'
+        post '/active_camp/confirm/:id', to: 'carnivals#confirm_active_camp'
+        post '/active_camp/claim/:id', to: 'carnivals#claim_active_camp'
         get '/global_settings/:code', to: 'global_settings#show'
       end
     end

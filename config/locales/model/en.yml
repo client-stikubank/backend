@@ -19,7 +19,6 @@ en:
       wrong_transaction_subject: 'transaction subject is not valid'
       invalid_reffering_code: 'Refferal Code is not valid'
       quota_is_full: Quota is full
-      has_active_camp: Has active schedule, please finish it first!
       more_than_joined_count: 'Quota should more that %{count}'
       stock_balance_not_enough: Stock balance not available to reduce
       more_than_redeemend_gifts: 'Quantity should more that %{count}'

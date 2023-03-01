@@ -7,8 +7,8 @@ class ActiveCarnivalSerializer
     CarnivalDetailSerializer.new(Carnival.active).serializable_hash
   end
 
-  attribute :active_camp do |object|
-    UserStageScheduleSerializer.new(object.active_camp).serializable_hash
+  attribute :active_camps do |object|
+    UserStageScheduleSerializer.new(object.active_camps).serializable_hash
   end
 
   attribute :pending_assessment do |object|

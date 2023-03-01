@@ -15,7 +15,6 @@ class UserStageSchedule < ApplicationRecord
   has_many :rewards, foreign_key: :activitable_id
 
   validate :check_quota
-  validate :check_status, on: :create
 
   scope :current, -> {
     joins(:carnival).where(
@@ -56,11 +55,5 @@ class UserStageSchedule < ApplicationRecord
     return unless stage_camp_schedule.full?
 
     errors.add(:base, I18n.t('errors.messages.quota_is_full'))
-  end
-
-  def check_status
-    return unless user.active_camp
-
-    errors.add(:base, I18n.t('errors.messages.has_active_camp'))
   end
 end

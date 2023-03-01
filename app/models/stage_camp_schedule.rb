@@ -7,6 +7,8 @@ class StageCampSchedule < ApplicationRecord
   enum learning_type: { offline: 0, online: 1 }
 
   belongs_to :stage_camp
+  has_one :camp, through: :stage_camp
+  has_one :stage, through: :stage_camp
   has_many :user_stage_schedules, dependent: :destroy
   has_many :users, through: :user_stage_schedules
 

@@ -5,7 +5,7 @@ class User < ApplicationRecord
   rolify
 
   has_one :user_profile, dependent: :destroy
-  has_one :active_camp, -> { active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
+  has_many :active_camps, -> { includes(:stage_camp_schedule).active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
   has_one :pending_assessment, -> { pending.order(created_at: :desc) }, class_name: 'Assessment'
   has_one :last_assessment, -> { completed.order(completed_at: :desc) }, class_name: 'Assessment'
 

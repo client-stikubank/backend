@@ -8,9 +8,13 @@ module Api
       end
 
       def confirm_active_camp
-        error_message = 'Konfirmasi pelatihan 1 jam sebelum pelatihan dimulai'
-
-        error!(error_message) unless @active_camp.stage_camp_schedule.reminded?
+        if @active_camp.stage_camp_schedule.online?
+          error_message = 'Konfirmasi pelatihan 1 jam sebelum pelatihan dimulai'
+          error!(error_message) unless @active_camp.stage_camp_schedule.reminded?
+        else
+          error_message = 'Maaf kamu sudah tidak bisa melakukan konfirmasi kehadiran'
+          error!(error_message) if @active_camp.stage_camp_schedule.completed?
+        end
 
         if @active_camp.confirmed!
           render json: { success: true }
@@ -33,7 +37,7 @@ module Api
       private
 
       def active_camp
-        @active_camp ||= current_user.active_camp
+        @active_camp = current_user.active_camps.find_by(id: params[:id])
       end
     end
   end
