@@ -4,6 +4,8 @@ class StageSerializer
   attributes :name, :level
 
   attribute :stage_camps do |object|
-    StageCampSerializer.new(object.stage_camps).serializable_hash
+    stage_camps = object.stage_camps.includes(:camp).where(camps: { status: 1 })
+
+    StageCampSerializer.new(stage_camps).serializable_hash
   end
 end

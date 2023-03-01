@@ -31,4 +31,6 @@
 # Ignore ds_store files.
 .DS_Store
 
+/public/*
+
 .env

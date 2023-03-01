@@ -12,12 +12,12 @@ module Admin
       )
 
       @stages = stages.success
-      serialize!(Stage, @stages, paginate(@stages))
+      serialize!('Admin::Stage', @stages, paginate(@stages))
     end
 
     def update
       stage = StageService::Update.new(params: stage_params, record: @stage).call
-      stage ? serialize!(Stage, stage) : error!(stage.failure[1])
+      stage ? serialize!('Admin::Stage', stage) : error!(stage.failure[1])
     end
 
     private
