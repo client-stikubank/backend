@@ -33,7 +33,7 @@ module Admin
     private
 
     def camp_params
-      params.require(:camp).permit(:title, :description, :level, :status, :speaker_id, reward_amount: [])
+      params.require(:camp).permit(:title, :description, :level, :status, :subtitle, :speaker_id, reward_amount: [])
     end
 
     def set_camp
