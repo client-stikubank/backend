@@ -11,6 +11,9 @@ module Api
         if @active_camp.stage_camp_schedule.online?
           error_message = 'Konfirmasi pelatihan 1 jam sebelum pelatihan dimulai'
           error!(error_message) unless @active_camp.stage_camp_schedule.reminded?
+        elsif
+          error_message = 'Pelatihan belum dimulai'
+          error!(error_message) if @active_camp.stage_camp_schedule.pending?
         else
           error_message = 'Maaf kamu sudah tidak bisa melakukan konfirmasi kehadiran'
           error!(error_message) if @active_camp.stage_camp_schedule.completed?

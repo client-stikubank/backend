@@ -41,7 +41,7 @@ class CampReminderWorker
           if Rails.env.staging? || Rails.env.production?
             messages = "Hai Youthcampers!\nJangan lupa kamu ada jadwal pelatihan hari ini lho.\nPastikan kamu hadir dan konfirmasi kehadiran di Youthcamp Apps ya!\n\n*Pelatihan:*\n#{schedule.stage.name} - Level #{schedule.stage.level}\n#{schedule.camp.title}\n#{I18n.l(schedule.started_at)}\n#{schedule.time_start} - #{schedule.time_end}"
             SendWhatsappWorker.perform_at(schedule.started_at.beginning_of_day + 5.hours, phone_numbers, messages, 'broadcast')
-          end 
+          end
         end
       end
     end
