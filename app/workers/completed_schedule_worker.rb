@@ -7,7 +7,7 @@ class CompletedScheduleWorker
     schedule.transaction do
       schedule.completed!
       
-      schedule.user_stage_schedules.not_finish.not_rejected.each do |user_schedule|
+      schedule.user_stage_schedules.pending.each do |user_schedule|
         user_schedule.absent!
       end
     end
