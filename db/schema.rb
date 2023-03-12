@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_12_143815) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_12_160019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_12_143815) do
     t.datetime "updated_at", null: false
     t.uuid "speaker_id"
     t.integer "reward_amount", default: [0, 0, 0, 0], array: true
+    t.string "subtitle"
     t.index ["speaker_id"], name: "index_camps_on_speaker_id"
   end
 
