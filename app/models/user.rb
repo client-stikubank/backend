@@ -123,13 +123,13 @@ class User < ApplicationRecord
   end
 
   def check_reffering_code
-    reffering = User.find_by(refferal_code: reffering_code)
+    reffering = User.find_by(refferal_code: reffering_code&.upcase)
 
     errors.add(:base, I18n.t('errors.messages.invalid_reffering_code')) if reffering.blank?
   end
 
   def build_refferal
-    reffering = User.find_by(refferal_code: reffering_code)
+    reffering = User.find_by(refferal_code: reffering_code&.upcase)
 
     Refferal.create(user: self, reffered_by_id: reffering.id) if reffering.present?
   end
