@@ -3,7 +3,7 @@
 class Redeem < ApplicationRecord
   default_scope { joins(:coin).order(updated_at: :desc) }
 
-  enum redeem_type: { gift: 0 }
+  enum redeem_type: { gift: 0, event: 1 }
   enum status: { pending: 'pending', processed: 'processed', completed: 'completed' }
 
   belongs_to :from, class_name: 'Wallet'

@@ -5,13 +5,15 @@ class User < ApplicationRecord
   rolify
 
   has_one :user_profile, dependent: :destroy
-  has_many :active_camps, -> { includes(:stage_camp_schedule).active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
   has_one :pending_assessment, -> { pending.order(created_at: :desc) }, class_name: 'Assessment'
   has_one :last_assessment, -> { completed.order(completed_at: :desc) }, class_name: 'Assessment'
-
+  
+  has_many :active_camps, -> { includes(:stage_camp_schedule).active.order(created_at: :desc) }, class_name: 'UserStageSchedule'
+  has_many :device_infos, dependent: :destroy
   has_many :refferals, dependent: :destroy, foreign_key: 'reffered_by_id'
   has_many :user_stage_schedules, dependent: :destroy
   has_many :user_carnival_gifts, dependent: :destroy
+  has_many :user_events, dependent: :destroy
   has_many :current_schedules, -> { current }, class_name: 'UserStageSchedule'
   has_many :finished_schedules, -> { finish }, class_name: 'UserStageSchedule'
   has_many :stage_camp_schedules, through: :user_stage_schedules

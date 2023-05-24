@@ -8,7 +8,7 @@ class Event < ApplicationRecord
   belongs_to :city
 
   has_many :user_events, dependent: :destroy
-  has_many :sold_events, -> { where(status: [1, 2]) }, class_name: 'UserEvent'
+  # has_many :sold_events, -> { where(status: [1, 2]) }, class_name: 'UserEvent'
 
   validates :title, presence: true, uniqueness: true
   validates :reward_amount, length: {
@@ -19,10 +19,11 @@ class Event < ApplicationRecord
   acts_as_paranoid
 
   def out_of_stock?
-    user_events.size >= quantity
+    # user_events.size >= quantity
   end
 
   def book_available?
-    active? && quantity.positive? && !out_of_stock?
+    # active? && quantity.positive? && !out_of_stock?
+    active?
   end
 end

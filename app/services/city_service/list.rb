@@ -8,7 +8,7 @@ class CityService::List
   include Dry::Monads::Do.for(:call)
 
   def call(pagination: nil, query: nil, order: nil)
-    records = City.all
+    records = City.includes(:province).all
     Success(records.ransack(query.query).result.page(pagination.page).per(pagination.per_page))
   end
 end

@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     end
     namespace :api do
       namespace :v1 do
+        resources :events, only: :index
         resources :cities, only: :index
         resources :provinces, only: :index
         resources :stages, only: :show
@@ -67,6 +68,7 @@ Rails.application.routes.draw do
         resources :carnival_gifts, only: %i[index show]
         resources :rewards, only: :index
         resources :user_carnival_gifts, only: %i[index create update]
+        resources :user_events, only: %i[index create update]
         resources :assessments, only: %i[index create update]
         resources :assessment_answers, only: :update
 

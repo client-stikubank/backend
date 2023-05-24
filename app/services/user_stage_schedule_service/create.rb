@@ -23,6 +23,10 @@ class UserStageScheduleService::Create
 
   def call_create_record
     schedule_id = params[:stage_camp_schedule_id]
+    active_user_stage_schedule = user.user_stage_schedules.find_by(stage_camp_schedule_id: schedule_id)
+
+    return Success(active_user_stage_schedule) if active_user_stage_schedule.present?
+  
     record = user ? user.user_stage_schedules.new(stage_camp_schedule_id: schedule_id) : UserStageSchedule.new(params)
 
     if record.save
