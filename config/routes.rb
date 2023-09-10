@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       resources :events
       resources :user_events
       resources :global_settings
+      resources :questionnaires
+      resources :qr_clues
 
       post '/login', to: 'login#create'
       put :update_password, path: '/:id/update_password', to: 'users#update_password'
@@ -71,6 +73,7 @@ Rails.application.routes.draw do
         resources :user_events, only: %i[index create update]
         resources :assessments, only: %i[index create update]
         resources :assessment_answers, only: :update
+        resources :user_questionnaires, only: %i[create]
 
         get :display_profile, path: '/display_profile', to: 'user_profiles#display_profile'
         put :update_profile, path: '/update_profile', to: 'user_profiles#update_profile'
@@ -79,6 +82,8 @@ Rails.application.routes.draw do
         post '/active_camp/confirm/:id', to: 'carnivals#confirm_active_camp'
         post '/active_camp/claim/:id', to: 'carnivals#claim_active_camp'
         get '/global_settings/:code', to: 'global_settings#show'
+        get '/qr_clues/:id', to: 'qr_clues#show'
+        get '/questionnaires/:id', to: 'questionnaires#show'
       end
     end
 

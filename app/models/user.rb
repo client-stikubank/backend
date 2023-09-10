@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :user_stage_schedules, dependent: :destroy
   has_many :user_carnival_gifts, dependent: :destroy
   has_many :user_events, dependent: :destroy
+  has_many :user_questionnaires, dependent: :destroy
   has_many :current_schedules, -> { current }, class_name: 'UserStageSchedule'
   has_many :finished_schedules, -> { finish }, class_name: 'UserStageSchedule'
   has_many :stage_camp_schedules, through: :user_stage_schedules

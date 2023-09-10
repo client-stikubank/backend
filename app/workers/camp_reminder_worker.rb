@@ -3,8 +3,8 @@ class CampReminderWorker
 
   def perform
     schedules = StageCampSchedule.includes(:users, :camp, :stage).upcoming.pending
+
     schedules.each do |schedule|
-      
       if schedule.online?
         time_now = Time.zone.now
         time_diff = (schedule.started_datetime - time_now) / 1.hour
@@ -21,9 +21,9 @@ class CampReminderWorker
 
       schedule.transaction do
         phone_numbers = schedule.users.includes(:user_profile).pluck('user_profiles.phone_number')
-        schedule.reminded!
-        
+
         if schedule.online?
+          schedule.reminded!
           finish_time = ((schedule.ended_datetime - Time.zone.now) / 1.minute).round
           ClaimScheduleWorker.perform_in(finish_time.minutes, schedule.id)
 
@@ -35,7 +35,7 @@ class CampReminderWorker
             SendWhatsappWorker.perform_async(phone_numbers, messages, 'broadcast')
           end
         else
-          ClaimScheduleWorker.perform_at(schedule.ended_datetime - 15.minutes, schedule.id)
+          schedule.claim_time!
           AbsentUserWorker.perform_at((schedule.started_at + 1.days).beginning_of_day, schedule.id)
 
           if Rails.env.staging? || Rails.env.production?

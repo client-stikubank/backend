@@ -5,7 +5,7 @@ class Reward < ApplicationRecord
 
   include AASM
 
-  enum reward_type: { join_camp: 0, refferal: 1 }
+  enum reward_type: { join_camp: 0, refferal: 1, questionnaire: 2 }
   enum status: { pending: 'pending', processed: 'processed', completed: 'completed' }
 
   belongs_to :from, class_name: 'Stock'

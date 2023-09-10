@@ -13,6 +13,7 @@ class UserStageSchedule < ApplicationRecord
   has_one :stage, through: :stage_camp
   has_one :carnival, through: :stage
   has_many :rewards, foreign_key: :activitable_id
+  before_create :set_default_confirmed
 
   validate :check_quota
 
@@ -55,5 +56,9 @@ class UserStageSchedule < ApplicationRecord
     return unless stage_camp_schedule.full?
 
     errors.add(:base, I18n.t('errors.messages.quota_is_full'))
+  end
+
+  def set_default_confirmed
+    self.status = 1
   end
 end

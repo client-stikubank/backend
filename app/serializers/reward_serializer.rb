@@ -13,6 +13,8 @@ class RewardSerializer
       UserStageScheduleSerializer.new(object.activitable).serializable_hash
     when 'refferal'
       RefferalSerializer.new(object.activitable).serializable_hash
+    when 'questionnaire'
+      UserQuestionnaireSerializer.new(object.activitable).serializable_hash
     else
       object.activitable
     end

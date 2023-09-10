@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_24_152349) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_020735) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -224,6 +224,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_152349) do
     t.index ["deleted_at"], name: "index_provinces_on_deleted_at"
   end
 
+  create_table "qr_clues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "clue"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "questionnaires", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "question"
+    t.text "answers", default: [], array: true
+    t.integer "reward_amount", default: [0, 0, 0, 0], array: true
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "status", default: 0, null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_questionnaires_on_deleted_at"
+    t.index ["question", "deleted_at"], name: "index_questionnaires_on_question_and_deleted_at", unique: true
+  end
+
   create_table "redeems", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "amount", default: 0, null: false
     t.uuid "from_id"
@@ -395,6 +416,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_152349) do
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
+  create_table "user_questionnaires", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "questionnaire_id"
+    t.string "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionnaire_id"], name: "index_user_questionnaires_on_questionnaire_id"
+    t.index ["user_id"], name: "index_user_questionnaires_on_user_id"
+  end
+
   create_table "user_stage_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "stage_camp_schedule_id"
@@ -476,6 +507,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_152349) do
   add_foreign_key "user_events", "users"
   add_foreign_key "user_profiles", "cities"
   add_foreign_key "user_profiles", "users"
+  add_foreign_key "user_questionnaires", "questionnaires"
+  add_foreign_key "user_questionnaires", "users"
   add_foreign_key "user_stage_schedules", "stage_camp_schedules"
   add_foreign_key "user_stage_schedules", "users"
   add_foreign_key "users_roles", "roles"
