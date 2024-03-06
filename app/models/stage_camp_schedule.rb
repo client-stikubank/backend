@@ -31,9 +31,7 @@ class StageCampSchedule < ApplicationRecord
   end
 
   def ended_datetime
-    times = time_end.split(':').map(&:to_i)
-
-    started_at.in_time_zone.change(hour: times[0], min: times[1])
+    started_at.end_of_day
   end
 
   private
