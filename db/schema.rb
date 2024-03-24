@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_09_020735) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_24_073906) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "assessment_answers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -213,7 +212,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_020735) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_personalities_on_name", unique: true
+    t.index ["code"], name: "index_personalities_on_code", unique: true
   end
 
   create_table "provinces", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -444,9 +443,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_020735) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
     t.string "refferal_code"
     t.string "reset_code"
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
+    t.index ["email"], name: "index_users_on_email", unique: true, where: "(discarded_at IS NULL)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

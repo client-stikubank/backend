@@ -10,6 +10,10 @@ module Api
         user.instance_of?(User) ? serialize!(User, user) : error!(user.failure[1])
       end
 
+      def delete_account
+        render json: { success: user.discard }
+      end
+
       private
 
       def user_params

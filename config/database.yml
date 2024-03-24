@@ -5,13 +5,13 @@ default: &default
 
 development:
   <<: *default
-  database: stikubank_backend_development
+  database: youthcamp_backend_development
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 test:
   <<: *default
-  database: stikubank_backend_test
+  database: youthcamp_backend_test
   host: localhost
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>

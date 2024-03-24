@@ -43,7 +43,7 @@ group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
 
   # A library for generating fake data [https://github.com/faker-ruby/faker]
-  gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
+  gem 'faker'
 
   # A library for setting up Ruby objects as test data. [https://github.com/thoughtbot/factory_bot_rails]
   gem 'factory_bot_rails', '~> 6.2'
@@ -120,6 +120,7 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'aasm'
 gem 'cancancan'
 gem 'carrierwave', '~> 2.0'
+gem 'discard', '~> 1.2'
 gem 'dotenv-rails'
 gem 'fog-aws'
 gem 'jsonapi-serializer'

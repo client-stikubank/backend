@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include Authenticable
+  include Discard::Model
   rolify
 
   has_one :user_profile, dependent: :destroy
@@ -27,6 +28,7 @@ class User < ApplicationRecord
     end
   end
 
+  validates :email, uniqueness: { scope: :discarded_at }
   validate :check_reffering_code, on: :create, if: proc { reffering_code.present? }
 
   attr_accessor :generated_password, :role_types, :reffering_code, :student_information, :parent_information
@@ -164,5 +166,13 @@ class User < ApplicationRecord
 
       break if User.find_by(refferal_code: code).blank?
     end
+  end
+
+  def active_for_authentication?
+    super && !discarded?
+  end
+
+  def devise_will_save_change_to_email?
+    false
   end
 end
