@@ -15,7 +15,7 @@ module Admin
       end
 
       @form.save do |_form_params|
-        user = User.authenticate(params[:email], params[:password])
+        user = User.kept.authenticate(params[:email], params[:password])
 
         unless user
           return render json: { errors: I18n.t('controllers.admin.login.errors.invalid_credentials') },
