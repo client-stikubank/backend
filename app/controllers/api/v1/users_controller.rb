@@ -2,7 +2,7 @@
 module Api
   module V1
     class UsersController < MobileController
-      before_action :set_user, only: %i[update_password]
+      before_action :set_user, only: %i[update_password delete_account]
 
       def update_password
         user = UserService::Update.new(params: user_params, record: @user).call
@@ -11,7 +11,7 @@ module Api
       end
 
       def delete_account
-        render json: { success: user.discard }
+        render json: { success: @user.discard }
       end
 
       private

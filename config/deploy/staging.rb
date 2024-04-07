@@ -1,6 +1,6 @@
 server '159.223.41.118', user: 'deploy', roles: %i[app db web]
 set :rails_env, 'staging'
-set :branch, 'main'
+set :branch, 'main-backup'
 set :migration_role, :db
 set :migration_servers, -> { primary(fetch(:migration_role)) }
 set :stage, :staging
