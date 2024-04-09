@@ -115,7 +115,7 @@ gem 'sidekiq', '~> 6.4', '>= 6.4.1'
 gem 'sidekiq-cron'
 
 # Object-based searching [https://github.com/activerecord-hackery/ransack]
-gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'ransack', '~> 3.2.1'
 
 gem 'aasm'
 gem 'cancancan'
