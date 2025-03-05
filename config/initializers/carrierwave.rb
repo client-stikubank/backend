@@ -5,9 +5,9 @@ CarrierWave.configure do |config|
       :aws_access_key_id => ENV['DO_SPACE_ACCESS_KEY'],
       :aws_secret_access_key => ENV['DO_SPACE_SECRET_KEY'],
       :region => 'sgp1',
-      :endpoint => 'https://youthcamp-carrierwave.sgp1.cdn.digitaloceanspaces.com'
+      :endpoint => 'https://sgp1.digitaloceanspaces.com'
     }
-    config.asset_host = "https://#{ENV['DO_SPACE_BUCKET']}.sgp1.cdn.digitaloceanspaces.com"
+    config.asset_host = "https://#{ENV['DO_SPACE_BUCKET']}.sgp1.digitaloceanspaces.com"
     config.enable_processing = true
     config.fog_attributes = { 'Cache-Control' => 'max-age=315576000' }
     config.fog_directory = ENV['DO_SPACE_BUCKET']
