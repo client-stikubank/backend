@@ -111,7 +111,7 @@ gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'doorkeeper', '~> 5.5', '>= 5.5.4'
 
 # Simple, efficient background processing for Ruby [https://github.com/mperham/sidekiq]
-gem 'sidekiq', '~> 6.4', '>= 6.4.1'
+gem 'sidekiq', '~> 7.1'
 gem 'sidekiq-cron'
 
 # Object-based searching [https://github.com/activerecord-hackery/ransack]
