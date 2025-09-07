@@ -7,14 +7,14 @@ module Api
           user: current_user
         ).call
 
-        if result.success?
-          if result.value.is_a?(Array) && result.value[0] == :wrong_answer
-            render json: { message: result.value[1], status: "wrong_answer" }, status: :ok
-          else
-            serialize!(UserQuestionnaire, result.value)
-          end
-        else
+        if result.is_a?(Array) && result[0] == :wrong_answer
+          render json: { message: result[1], status: "wrong_answer" }, status: :ok
+        elsif result.instance_of?(UserQuestionnaire)
+          serialize!(UserQuestionnaire, result)
+        elsif result.respond_to?(:failure)
           error!(result.failure[1])
+        else
+          error!("Unexpected response from service")
         end
       end
 
