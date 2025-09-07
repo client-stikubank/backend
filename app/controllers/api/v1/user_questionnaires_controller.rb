@@ -2,12 +2,20 @@ module Api
   module V1
     class UserQuestionnairesController < MobileController
       def create
-        user_questionnaire = UserQuestionnaireService::Create.new(
+        result = UserQuestionnaireService::Create.new(
           params: user_questionnaire_params,
           user: current_user
         ).call
 
-        user_questionnaire ? serialize!(UserQuestionnaire, user_questionnaire) : error!(user_questionnaire.failure[1])
+        if result.success?
+          if result.value.is_a?(Array) && result.value[0] == :wrong_answer
+            render json: { message: result.value[1], status: "wrong_answer" }, status: :ok
+          else
+            serialize!(UserQuestionnaire, result.value)
+          end
+        else
+          error!(result.failure[1])
+        end
       end
 
       private

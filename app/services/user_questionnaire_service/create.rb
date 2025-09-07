@@ -30,7 +30,7 @@ class UserQuestionnaireService::Create
 
     if record.save
       unless record.correct_answer?
-        return Success([:wrong_answer, "Maaf jawaban Anda salah. Silakan coba lagi dengan QR lainnya."])
+        return Success([:wrong_answer, "Maaf jawaban Anda salah. Silakan coba lagi dengan QR lainnya.", record])
       end
 
       Success(record)
