@@ -18,7 +18,7 @@ module Api
         user_questionnaire = @questionnaire.users.find_by(id: current_user.id)
 
         if user_questionnaire.present?
-          render json: { message: 'Anda sudah menjawab pertanyaan ini!' }
+          render json: { message: 'Anda sudah menjawab QR ini!' }
         end
       end
     end

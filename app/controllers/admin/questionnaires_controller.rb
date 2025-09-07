@@ -40,7 +40,7 @@ module Admin
     private
 
     def questionnaire_params
-      params.require(:questionnaire).permit(:question, :status, :start_date, :end_date, answers: [], reward_amount: [])
+      params.require(:questionnaire).permit(:question, :status, :start_date, :end_date, :correct_answer, answers: [], reward_amount: [])
     end
 
     def set_questionnaire

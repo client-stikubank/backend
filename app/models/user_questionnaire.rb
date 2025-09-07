@@ -5,8 +5,14 @@ class UserQuestionnaire < ApplicationRecord
   belongs_to :questionnaire
 
   validates :user_id, uniqueness: { scope: :questionnaire_id }
-  
-  after_create :claim_reward
+
+  after_create :claim_reward, if: :correct_answer?
+
+  def correct_answer?
+    questionnaire.correct_answer.blank? ||
+    questionnaire.correct_answer.strip == "" ||
+    answer.strip.downcase == questionnaire.correct_answer.strip.downcase
+  end
 
   private
 

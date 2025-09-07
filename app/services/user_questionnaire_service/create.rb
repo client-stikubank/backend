@@ -29,6 +29,10 @@ class UserQuestionnaireService::Create
              end
 
     if record.save
+      unless record.correct_answer?
+        return Failure([:error, "Maaf jawaban Anda salah. Silakan coba lagi dengan QR lainnya."])
+      end
+
       Success(record)
     else
       Failure([:error, record.errors])

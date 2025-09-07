@@ -6,6 +6,7 @@ module Api
           params: user_questionnaire_params,
           user: current_user
         ).call
+
         user_questionnaire ? serialize!(UserQuestionnaire, user_questionnaire) : error!(user_questionnaire.failure[1])
       end
 
